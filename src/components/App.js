@@ -1,15 +1,13 @@
 import React from "react";
 import "./App.css";
 
-import movie from "../images/movie.jpg";
+import ContenderCard from "./ContenderCard"
+
+import { useSpring, animated } from "react-spring";
+import { useDrag } from "react-use-gesture";
+// import movie from "../images/movie.jpg";
 
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Container,
-  Paper,
   Grid,
   makeStyles
 } from "@material-ui/core";
@@ -18,11 +16,11 @@ const useStyles = makeStyles({
   root: {},
   card: {
     height: 300,
-    width:200,
+    width: 200
   },
   cardInfo: {
     height: 300,
-    width:300,
+    width: 300
   },
   media: {
     height: 300,
@@ -31,76 +29,29 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const classes = useStyles();
+  const [{ x, y ,}, set] = useSpring(() => ({ x: 0, y: 0 }));
+  // Set the drag hook and define component movement based on gesture data
+  const bind = useDrag(({ down, movement: [mx, my] }) => {
+    set({ x: 0, y: down ? my : 0 });
+  });
+  // const classes = useStyles();
   return (
     <div className="App">
-      <Grid
-        container
-        spacing={6}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: "100vh", maxWidth: "100vw" }}
-      >
+      <animated.div {...bind()} style={{ x, y }}>
         <Grid
           container
-          item
-          spacing={4}
-          direction="row"
+          spacing={6}
+          direction="column"
           alignItems="center"
           justify="center"
+          style={{ minHeight: "100vh", maxWidth: "100vw" }}
         >
-          <Grid item>
-            <Card className={classes.card} raised={true}>
-              <CardMedia>
-                <img src={movie} className={classes.media} alt="henlo"></img>
-              </CardMedia>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className ={classes.cardInfo}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Lizard
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          
+        <ContenderCard></ContenderCard>
+        <ContenderCard></ContenderCard>
+          
         </Grid>
-
-        <Grid
-          container
-          item
-          spacing={4}
-          direction="row"
-          alignItems="center"
-          justify="center"
-        >
-          <Grid item>
-            <Card className={classes.card} raised={true}>
-              <CardMedia>
-                <img src={movie} className={classes.media} alt="henlo"></img>
-              </CardMedia>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className ={classes.cardInfo}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Lizard
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>        </Grid>
-      </Grid>
+      </animated.div>
     </div>
   );
 }
