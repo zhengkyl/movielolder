@@ -30,10 +30,6 @@ const useStyles = makeStyles(theme => ({
   cardExpanded: {
     width: 420,
   },
-  cardInfo: {
-    height: 300,
-    width: 300
-  },
   cardActions: {
     margin: -20,
   },
@@ -53,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ContenderCard({ size }) {
+function ContenderCard({children}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -62,14 +58,7 @@ function ContenderCard({ size }) {
   };
 
   return (
-    <Grid
-      // container
-      item
-      spacing={4}
-      direction="row"
-      alignItems="center"
-      justify="center"
-    >
+    
       <Card className={clsx(classes.card, {[classes.cardExpanded]: expanded})} raised={true}>
         <CardMedia>
           <Paper elevation={24}>
@@ -91,7 +80,7 @@ function ContenderCard({ size }) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant='h6'>Dora the Explora</Typography>
+            <Typography variant='h6'>{children}</Typography>
             <Typography paragraph>
               5/5
             </Typography>
@@ -106,7 +95,6 @@ function ContenderCard({ size }) {
           </CardContent>
       </Collapse>
       </Card>
-    </Grid>
   );
 }
 

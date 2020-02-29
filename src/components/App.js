@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-import ContenderCard from "./ContenderCard"
+import ContenderCard from "./ContenderCard";
 
-import { useSpring, animated } from "react-spring";
-import { useDrag } from "react-use-gesture";
+import { useSpring, animated, interpolate } from "react-spring";
+import { useHover, useDrag } from "react-use-gesture";
 // import movie from "../images/movie.jpg";
 
-import {
-  Grid,
-  makeStyles
-} from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {},
@@ -27,29 +24,103 @@ const useStyles = makeStyles({
     width: 200
   }
 });
-
+// const test = 2;
 function App() {
-  // const [{ x, y ,}, set] = useSpring(() => ({ x: 0, y: 0 }));
-  // // Set the drag hook and define component movement based on gesture data
-  // const bind = useDrag(({ down, movement: [mx, my] }) => {
-  //   set({ x: 0, y: down ? my : 0 });
-  // });
+  const [scale1, setScale1] = useState(1);
+  const [gray1, setGray1] = useState(0);
+  const bind1 = useHover(({ active }) => {
+    if (active) {
+      setScale1(1.1);
+      setScale2(0.9);
+
+      setGray2(90);
+    } else {
+      setScale1(1);
+      setScale2(1);
+
+      setGray2(0);
+    }
+  });
+
+  const [scale2, setScale2] = useState(1);
+  const [gray2, setGray2] = useState(0);
+  const bind2 = useHover(({ active }) => {
+    if (active) {
+      setScale2(1.1);
+      setScale1(0.9);
+
+      setGray1(90);
+    } else {
+      setScale2(1);
+      setScale1(1);
+
+      setGray1(0);
+    }
+  });
+
+  const [winner, setWinner] = useState(0);
+  const bigBind = useDrag(({ swipe: [swipeX, swipeY]}) => {
+    console.log(swipeY)
+    if (winner === 0) {
+      setWinner(swipeY)
+    }
+  }, {swipeDistance:[30,30], swipeVelocity:[0.25,0.25], axis:'y'})
+  // Set the drag hook and define component movement based on gesture data
   // const classes = useStyles();
   return (
-    <div className="App">
-        <Grid
-          container
-          spacing={6}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{ minHeight: "100vh", maxWidth: "100vw" }}
-        >
-          
-        <ContenderCard></ContenderCard>
-        <ContenderCard></ContenderCard>
-          
-        </Grid>
+    <div className="App" {...bigBind()}>
+      <Grid
+        container
+        spacing={6}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "100vh", maxWidth: "100vw" }}
+      >
+        {winner >= 0 ? (
+          <Grid
+            item
+            spacing={4}
+            direction="row"
+            alignItems="center"
+            justify="center"
+          >
+            {/* style = {{transform: interpolate([size], s=>`scale(${s})`) }} */}
+            <animated.div
+              {...bind1()}
+              style={{
+                transform: `scale(${scale1})`,
+                filter: `grayscale(${gray1}%)`
+              }}
+            >
+              <ContenderCard>hello</ContenderCard>
+            </animated.div>
+          </Grid>
+        ) : (
+          <div></div>
+        )}
+        {winner <= 0 ? (
+          <Grid
+            item
+            spacing={4}
+            direction="row"
+            alignItems="center"
+            justify="center"
+          >
+            <animated.div
+              {...bind2()}
+              style={{
+                transform: `scale(${scale2})`,
+                filter: `grayscale(${gray2}%)`
+              }}
+            >
+              <ContenderCard>hello2</ContenderCard>
+            </animated.div>
+          </Grid>
+        ) : (
+          <div></div>
+        )}
+      </Grid>
     </div>
   );
 }
