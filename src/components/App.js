@@ -29,15 +29,14 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const [{ x, y ,}, set] = useSpring(() => ({ x: 0, y: 0 }));
-  // Set the drag hook and define component movement based on gesture data
-  const bind = useDrag(({ down, movement: [mx, my] }) => {
-    set({ x: 0, y: down ? my : 0 });
-  });
+  // const [{ x, y ,}, set] = useSpring(() => ({ x: 0, y: 0 }));
+  // // Set the drag hook and define component movement based on gesture data
+  // const bind = useDrag(({ down, movement: [mx, my] }) => {
+  //   set({ x: 0, y: down ? my : 0 });
+  // });
   // const classes = useStyles();
   return (
     <div className="App">
-      <animated.div {...bind()} style={{ x, y }}>
         <Grid
           container
           spacing={6}
@@ -51,7 +50,6 @@ function App() {
         <ContenderCard></ContenderCard>
           
         </Grid>
-      </animated.div>
     </div>
   );
 }
