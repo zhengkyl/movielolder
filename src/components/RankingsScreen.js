@@ -1,9 +1,7 @@
-import React from "react"
+import React from "react";
 
 function RankingsScreen() {
-    return <div>
-
-    </div>
+  return <div></div>;
 }
 
-export default RankingsScreen
+export default RankingsScreen;

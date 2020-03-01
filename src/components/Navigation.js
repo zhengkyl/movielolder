@@ -1,21 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
-import ListAltIcon from '@material-ui/icons/ListAlt';
+import ListAltIcon from "@material-ui/icons/ListAlt";
 
-import HowToVoteIcon from '@material-ui/icons/HowToVote'
+import HowToVoteIcon from "@material-ui/icons/HowToVote";
 
-import MovieIcon from '@material-ui/icons/Movie';
+import MovieIcon from "@material-ui/icons/Movie";
 
 const useStyles = makeStyles({
   root: {
-    width: '100vw',
-  },
+    // position:'fixed',
+    // bottom:'0',
+    width: "100vw"
+  }
 });
 
-export default function Navigation({tab, onChange}) {
+export default function Navigation({ tab, onChange }) {
   const classes = useStyles();
 
   return (

@@ -1,17 +1,15 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import ContenderCard from "./ContenderCard"
-import { useSpring, animated, interpolate } from "react-spring"
-import { useHover, useDrag } from "react-use-gesture"
+import ContenderCard from "./ContenderCard";
+import { useSpring, animated, interpolate } from "react-spring";
+import { useHover, useDrag } from "react-use-gesture";
 // import movie from "../images/movie.jpg"
 
-import { Grid, makeStyles } from "@material-ui/core"
-
-
+import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    width:`100vw`,
+    width: `100vw`
   },
   card: {
     height: 300,
@@ -26,12 +24,11 @@ const useStyles = makeStyles({
     width: 200
   },
   grid: {
-    margin:0,
+    margin: 0
     // height:'100vh',
   }
 });
 function VoteScreen() {
-
   const classes = useStyles();
   const [scale1, setScale1] = useState(1);
   const [gray1, setGray1] = useState(0);
@@ -66,12 +63,14 @@ function VoteScreen() {
   });
 
   const [winner, setWinner] = useState(0);
-  const bigBind = useDrag(({ swipe: [swipeX, swipeY]}) => {
-    if (winner === 0) {
-      setWinner(swipeY)
-
-    }
-  }, {swipeDistance:[30,30], swipeVelocity:[0.25,0.25], axis:'y'})
+  const bigBind = useDrag(
+    ({ swipe: [swipeX, swipeY] }) => {
+      if (winner === 0) {
+        setWinner(swipeY);
+      }
+    },
+    { swipeDistance: [30, 30], swipeVelocity: [0.25, 0.25], axis: "y" }
+  );
   // Set the drag hook and define component movement based on gesture data
   // const classes = useStyles();
   return (
@@ -84,9 +83,7 @@ function VoteScreen() {
         className={classes.grid}
       >
         {winner >= 0 ? (
-          <Grid
-            item
-          >
+          <Grid item>
             {/* style = {{transform: interpolate([size], s=>`scale(${s})`) }} */}
             <animated.div
               {...bind1()}
@@ -102,9 +99,7 @@ function VoteScreen() {
           <div></div>
         )}
         {winner <= 0 ? (
-          <Grid
-            item
-          >
+          <Grid item>
             <animated.div
               {...bind2()}
               style={{
