@@ -1,5 +1,5 @@
 import React from "react";
-import "./ContenderCard.css";
+// import "./ContenderCard.css";
 
 import movie from "../images/movie.jpg";
 
@@ -10,7 +10,6 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Grid,
   makeStyles,
   CardActions,
   IconButton,
@@ -26,6 +25,8 @@ const useStyles = makeStyles(theme => ({
     width: 225,
     display: 'flex',
     flexDirection: 'row',
+    marginTop:24,
+    marginBottom:24,
   },
   cardExpanded: {
     width: 420,
