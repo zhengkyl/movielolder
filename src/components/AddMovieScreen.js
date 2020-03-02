@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 
-import firebase from "./firebase";
+// import firebase from "./firebase";
 
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import SearchResultCard from "./SearchResultCard";
 
+
 const API_BASE = "https://api.themoviedb.org/3/";
+const API_KEY = process.env.REACT_APP_MOVIEDB_API_KEY;
 const API_SEARCH = "search/movie?";
 
-const COLLECTION_NAME = "movies"
+// const COLLECTION_NAME = "movies";
 
 // searchTerm is what is currently in the search bar
 let searchTerm;
@@ -54,8 +56,6 @@ function submitSearch(event, setMovies) {
   }
 }
 
-
-
 function AddMovieScreen() {
   const [movies, setMovies] = useState(moviesCache);
   // console.log(movies)
@@ -76,7 +76,7 @@ function AddMovieScreen() {
       <List style={{ overflow: "auto" }} dense={true} disablePadding={true}>
         {movies.map(m => {
           return (
-            <ListItem key = {m.id} style={{ justifyContent: "center" }}>
+            <ListItem key={m.id} style={{ justifyContent: "center" }}>
               <SearchResultCard {...m} />
             </ListItem>
           );

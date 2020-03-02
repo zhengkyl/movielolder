@@ -7,8 +7,9 @@ const functions = require('firebase-functions');
 //  response.send("Hello from Firebase!");
 // });
 
-export default onMovieAdded = functions.database
+exports.onMovieAdded = functions.database
 .ref('/movies/{movieId}')
 .onCreate((snapshot, context) => {
-    
+    const movieId = context.params.id;
+    console.log(`hello ${movieId}`)
 })
