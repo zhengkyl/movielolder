@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   root: {
     // position:'fixed',
     // bottom:'0',
-    width: "100vw"
+    width: "100%"
   }
 });
 
