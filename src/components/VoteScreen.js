@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import ContenderCard from "./ContenderCard";
-import { useSpring, animated, interpolate } from "react-spring";
-import { useHover, useDrag } from "react-use-gesture";
+// import { useSpring, animated, interpolate } from "react-spring";
+// import { useHover, useDrag } from "react-use-gesture";
 import firebase from "./firebase";
 import { Grid, makeStyles } from "@material-ui/core";
 
@@ -30,10 +30,8 @@ const useStyles = makeStyles({
 
 let moviesList = [];
 
-// const updateElo = firebase.functions().httpsCallable('updateElo');
-// function sendVoteResults(winner_id, loser_id){
-//   updateElo({winnerId:winner_id, loserId: loser_id})
-// }
+const updateElo = firebase.functions().httpsCallable('updateElo');
+
 function VoteScreen() {
   const [moviesFetched, setMoviesFetched] = useState(false);
 
@@ -41,15 +39,15 @@ function VoteScreen() {
 
   const [currentMovies, setCurrentMovies] = useState([]);
   const [winner, setWinner] = useState(0);
-  const vote = () => {};
   const fetchMoviesList = () => {
+    moviesList = []
     const db = firebase
       .firestore()
       .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME);
     db.get().then(snapshot => {
       snapshot.forEach(doc => moviesList.push({ id: doc.id, ...doc.data() }));
       setMoviesFetched(true);
-      console.log(moviesList);
+      // console.log(moviesList);
       setCurrentMovies(getCompetingMovies());
     });
   };
@@ -60,10 +58,25 @@ function VoteScreen() {
     if (secondIndex === firstIndex) {
       secondIndex = firstIndex !== 0 ? 0 : moviesList.length;
     }
-    console.log([moviesList[firstIndex], moviesList[secondIndex]]);
+    // console.log([moviesList[firstIndex], moviesList[secondIndex]]);
     return [moviesList[firstIndex], moviesList[secondIndex]];
   };
   useEffect(() => fetchMoviesList(), []);
+
+  const onVote = w => {
+    if(winner!==0){
+      return;
+    }
+    setWinner(w);
+    const lIndex = w === -1 ? 1: 0;
+    const wIndex = w === -1 ? 0: 1;
+    // console.log({winnerId:currentMovies[wIndex].id, loserId:currentMovies[lIndex].id})
+    updateElo({winnerId:currentMovies[wIndex].id, loserId:currentMovies[lIndex].id})
+    setTimeout(() => {
+      setCurrentMovies(getCompetingMovies());
+      setWinner(0);
+    }, 500);
+  };
 
   return (
     <div
@@ -71,29 +84,44 @@ function VoteScreen() {
         height: `100%`
       }}
     >
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justify="center"
-        className={classes.grid}
-      >
-        {winner >= 0 ? (
-          <Grid item container direction="column" alignItems="center">
-            <ContenderCard {...currentMovies[0]}></ContenderCard>
-          </Grid>
-        ) : (
-          <div></div>
-        )}
-        {winner <= 0 ? (
-          <Grid item container direction="column" alignItems="center">
-
-            <ContenderCard {...currentMovies[1]}></ContenderCard>
-          </Grid>
-        ) : (
-          <div></div>
-        )}
-      </Grid>
+      {!moviesFetched ? (
+        <p>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Loading movies... ✧ﾟ･:*╰(◕‿◕╰)</p>
+      ) : (
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justify="center"
+          className={classes.grid}
+        >
+          {winner <=0 ? (
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems="center"
+              onClick={() => onVote(-1)}
+            >
+              <ContenderCard {...currentMovies[0]}></ContenderCard>
+            </Grid>
+          ) : (
+            <div></div>
+          )}
+          {winner >=0 ? (
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems="center"
+              onClick={() => onVote(1)}
+            >
+              <ContenderCard {...currentMovies[1]}></ContenderCard>
+            </Grid>
+          ) : (
+            <div></div>
+          )}
+        </Grid>
+      )}
     </div>
   );
 }
