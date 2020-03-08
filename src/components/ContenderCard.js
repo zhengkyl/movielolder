@@ -1,7 +1,8 @@
 import React from "react";
 // import "./ContenderCard.css";
 
-import movie from "../images/movie.jpg";
+// import movie from "../images/movie.jpg";
+import PosterImage from "./PosterImage"
 
 import clsx from 'clsx';
 
@@ -21,52 +22,53 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 const useStyles = makeStyles(theme => ({
   root: {},
   card: {
-    height: 300,
-    width: 225,
+    height: '35vh',
+    // width: 200,
     display: 'flex',
     flexDirection: 'row',
     marginTop:24,
-    marginBottom:24,
+    // marginBottom:24,
   },
-  cardExpanded: {
-    width: 420,
-  },
-  cardActions: {
-    margin: -20,
-  },
+  // cardExpanded: {
+  //   width: 420,
+  // },
+  // cardActions: {
+  //   margin: -20,
+  // },
   media: {
-    height: 300,
-    width: 200
+    height: '100%',
+    width: 'auto'
   },
-  expand: {
-    transform: 'rotate(-90deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(90deg)',
-  },
+  // expand: {
+  //   transform: 'rotate(-90deg)',
+  //   marginLeft: 'auto',
+  //   transition: theme.transitions.create('transform', {
+  //     duration: theme.transitions.duration.shortest,
+  //   }),
+  // },
+  // expandOpen: {
+  //   transform: 'rotate(90deg)',
+  // },
 }));
 
-function ContenderCard({children}) {
+function ContenderCard({ id, posterPath, title, summary }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  // const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
   return (
-    
-      <Card className={clsx(classes.card, {[classes.cardExpanded]: expanded})} raised={true}>
-        <CardMedia>
-          <Paper elevation={24}>
-            <img src={movie} className={classes.media} alt="henlo"></img>
-          </Paper>
+      <>
+      <Card className={classes.card} raised={true}>
+      {/* <Card className={clsx(classes.card, {[classes.cardExpanded]: expanded})} raised={true}> */}
+        <CardMedia className ={classes.media}> 
+          {/* <Paper elevation={24}> */}
+          <PosterImage path={posterPath} />
+          {/* </Paper> */}
         </CardMedia>
-        <CardActions className={classes.cardActions}>
+        {/* <CardActions className={classes.cardActions}>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -94,8 +96,10 @@ function ContenderCard({children}) {
               saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
             </Typography>
           </CardContent>
-      </Collapse>
+      </Collapse> */}
       </Card>
+      <Typography variant="h6">{title}</Typography>
+      </>
   );
 }
 

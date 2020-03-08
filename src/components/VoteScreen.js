@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import ContenderCard from "./ContenderCard";
 import { useSpring, animated, interpolate } from "react-spring";
 import { useHover, useDrag } from "react-use-gesture";
 // import movie from "../images/movie.jpg"
-
+import firebase from "./firebase";
 import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -24,57 +24,86 @@ const useStyles = makeStyles({
     width: 200
   },
   grid: {
-    margin: 0
-    // height:'100vh',
+    margin: 0,
+    height: "100%"
   }
 });
+
+let moviesList = [];
+
+// const updateElo = firebase.functions().httpsCallable('updateElo');
+// function sendVoteResults(winner_id, loser_id){
+//   updateElo({winnerId:winner_id, loserId: loser_id})
+// }
 function VoteScreen() {
+  const [moviesFetched, setMoviesFetched] = useState(false);
+  const fetchMoviesList = () => {
+    const db = firebase
+      .firestore()
+      .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME);
+    db.get().then(snapshot => {
+      snapshot.forEach(doc => moviesList.push({ id: doc.id, ...doc.data() }));
+      setMoviesFetched(true);
+      console.log(moviesList);
+    });
+  };
+  useEffect(()=>fetchMoviesList(), []);
+  
+
   const classes = useStyles();
-  const [scale1, setScale1] = useState(1);
-  const [gray1, setGray1] = useState(0);
-  const bind1 = useHover(({ active }) => {
-    if (active) {
-      setScale1(1.1);
-      setScale2(0.9);
+  // const [scale1, setScale1] = useState(1);
+  // const [gray1, setGray1] = useState(0);
+  // const bind1 = useHover(({ active }) => {
+  //   if (active) {
+  //     setScale1(1.1);
+  //     setScale2(0.9);
 
-      setGray2(90);
-    } else {
-      setScale1(1);
-      setScale2(1);
+  //     setGray2(90);
+  //   } else {
+  //     setScale1(1);
+  //     setScale2(1);
 
-      setGray2(0);
-    }
-  });
+  //     setGray2(0);
+  //   }
+  // });
 
-  const [scale2, setScale2] = useState(1);
-  const [gray2, setGray2] = useState(0);
-  const bind2 = useHover(({ active }) => {
-    if (active) {
-      setScale2(1.1);
-      setScale1(0.9);
+  // const [scale2, setScale2] = useState(1);
+  // const [gray2, setGray2] = useState(0);
+  // const bind2 = useHover(({ active }) => {
+  //   if (active) {
+  //     setScale2(1.1);
+  //     setScale1(0.9);
 
-      setGray1(90);
-    } else {
-      setScale2(1);
-      setScale1(1);
+  //     setGray1(90);
+  //   } else {
+  //     setScale2(1);
+  //     setScale1(1);
 
-      setGray1(0);
-    }
-  });
+  //     setGray1(0);
+  //   }
+  // });
 
   const [winner, setWinner] = useState(0);
-  const bigBind = useDrag(
-    ({ swipe: [swipeX, swipeY] }) => {
-      if (winner === 0) {
-        setWinner(swipeY);
-      }
-    },
-    { swipeDistance: [30, 30], swipeVelocity: [0.25, 0.25], axis: "y" }
-  );
+  const vote = ()=>{
+
+  }
+  // const bigBind = useDrag(
+  //   ({ swipe: [swipeX, swipeY] }) => {
+  //     if (winner === 0) {
+  //       setWinner(swipeY);
+  //     }
+  //   },
+  //   { swipeDistance: [30, 30], swipeVelocity: [0.25, 0.25], axis: "y" }
+  // );
   // Set the drag hook and define component movement based on gesture data
   // const classes = useStyles();
   return (
-    <div {...bigBind()}>
+    <div
+      // {...bigBind()}
+      style={{
+        height: `100%`
+      }}
+    >
       <Grid
         container
         direction="column"
@@ -86,11 +115,11 @@ function VoteScreen() {
           <Grid item>
             {/* style = {{transform: interpolate([size], s=>`scale(${s})`) }} */}
             <animated.div
-              {...bind1()}
-              style={{
-                transform: `scale(${scale1})`,
-                filter: `grayscale(${gray1}%)`
-              }}
+              // {...bind1()}
+              // style={{
+              //   transform: `scale(${scale1})`,
+              //   filter: `grayscale(${gray1}%)`
+              // }}
             >
               <ContenderCard>hello</ContenderCard>
             </animated.div>
@@ -101,11 +130,11 @@ function VoteScreen() {
         {winner <= 0 ? (
           <Grid item>
             <animated.div
-              {...bind2()}
-              style={{
-                transform: `scale(${scale2})`,
-                filter: `grayscale(${gray2}%)`
-              }}
+              // {...bind2()}
+              // style={{
+              //   transform: `scale(${scale2})`,
+              //   filter: `grayscale(${gray2}%)`
+              // }}
             >
               <ContenderCard>hello2</ContenderCard>
             </animated.div>
