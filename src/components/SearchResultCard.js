@@ -17,7 +17,7 @@ import firebase from "./firebase";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    height: "33vh",
+    height: "20vh",
     width: "90%",
     display: "flex",
     flexDirection: "row"
@@ -38,7 +38,7 @@ function SearchResultCard({ id, posterPath, title, summary }) {
 
   const docRef = firebase
     .firestore()
-    .collection(COLLECTION_NAME)
+    .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME)
     .doc(`${id}`);
   docRef.get().then(docSnapshot => {
     if (docSnapshot.exists) {
