@@ -37,18 +37,6 @@ let moviesList = [];
 // }
 function VoteScreen() {
   const [moviesFetched, setMoviesFetched] = useState(false);
-  const fetchMoviesList = () => {
-    const db = firebase
-      .firestore()
-      .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME);
-    db.get().then(snapshot => {
-      snapshot.forEach(doc => moviesList.push({ id: doc.id, ...doc.data() }));
-      setMoviesFetched(true);
-      console.log(moviesList);
-    });
-  };
-  useEffect(()=>fetchMoviesList(), []);
-  
 
   const classes = useStyles();
   // const [scale1, setScale1] = useState(1);
@@ -82,11 +70,32 @@ function VoteScreen() {
   //     setGray1(0);
   //   }
   // });
-
+  const [currentMovies, setCurrentMovies] = useState([]);
   const [winner, setWinner] = useState(0);
-  const vote = ()=>{
+  const vote = () => {};
+  const fetchMoviesList = () => {
+    const db = firebase
+      .firestore()
+      .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME);
+    db.get().then(snapshot => {
+      snapshot.forEach(doc => moviesList.push({ id: doc.id, ...doc.data() }));
+      setMoviesFetched(true);
+      console.log(moviesList);
+      setCurrentMovies(getCompetingMovies());
+    });
+  };
 
-  }
+  const getCompetingMovies = () => {
+    const firstIndex = Math.floor(Math.random() * moviesList.length);
+    let secondIndex = Math.floor(Math.random() * moviesList.length);
+    if (secondIndex === firstIndex) {
+      secondIndex = firstIndex !== 0 ? 0 : moviesList.length;
+    }
+    console.log([moviesList[firstIndex], moviesList[secondIndex]]);
+    return [moviesList[firstIndex], moviesList[secondIndex]];
+  };
+  useEffect(() => fetchMoviesList(), []);
+
   // const bigBind = useDrag(
   //   ({ swipe: [swipeX, swipeY] }) => {
   //     if (winner === 0) {
@@ -112,32 +121,32 @@ function VoteScreen() {
         className={classes.grid}
       >
         {winner >= 0 ? (
-          <Grid item>
+          <Grid item container direction="column" alignItems="center">
             {/* style = {{transform: interpolate([size], s=>`scale(${s})`) }} */}
-            <animated.div
+            {/* <animated.div
               // {...bind1()}
               // style={{
               //   transform: `scale(${scale1})`,
               //   filter: `grayscale(${gray1}%)`
               // }}
-            >
-              <ContenderCard>hello</ContenderCard>
-            </animated.div>
+            > */}
+            <ContenderCard {...currentMovies[0]}></ContenderCard>
+            {/* </animated.div> */}
           </Grid>
         ) : (
           <div></div>
         )}
         {winner <= 0 ? (
-          <Grid item>
-            <animated.div
+          <Grid item container direction="column" alignItems="center">
+            {/* <animated.div
               // {...bind2()}
               // style={{
               //   transform: `scale(${scale2})`,
               //   filter: `grayscale(${gray2}%)`
               // }}
-            >
-              <ContenderCard>hello2</ContenderCard>
-            </animated.div>
+            > */}
+            <ContenderCard {...currentMovies[1]}></ContenderCard>
+            {/* </animated.div> */}
           </Grid>
         ) : (
           <div></div>
