@@ -18,7 +18,7 @@ function RankingsScreen() {
 
   return <div>
     <Typography variant="h5">
-      Movie Rankinds
+      Movie Rankings
     </Typography>
   </div>;
 }
