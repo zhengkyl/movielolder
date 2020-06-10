@@ -6,13 +6,13 @@ const functions = require('firebase-functions');
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
-const START_ELO = 500;
+const START_ELO = 550;
 exports.onMovieAdded = functions.firestore
 .document('movies/{movieId}')
 .onCreate((snapshot, context) => {
     const movieId = context.params.movieId;
-    console.log(`hello ${movieId}`)
-    console.log(`snapshot is : ${snapshot}`)
+    // console.log(`hello ${movieId}`)
+    // console.log(`snapshot is : ${snapshot}`)
 
     // const testvar= snapshot.val()
     // const var2 = testvar.title
@@ -48,7 +48,7 @@ exports.updateElo = functions.https.onCall((data, context) =>{
         const scoreL = doc2.data().score;
         // console.log(scoreW + " " + scoreL)
         const expectedW = 1 / (1 + (Math.pow(10,scoreL - scoreW)/RATING_SCALER))
-        const scoreChange = K*(1-expectedW)
+        const scoreChange = Math.ceil(K*(1-expectedW))
         const newScoreW = scoreW + scoreChange;
         newScoreL = scoreL - scoreChange;
         return db.doc(`movies/${winnerId}`).update({score:newScoreW})

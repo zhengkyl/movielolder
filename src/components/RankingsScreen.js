@@ -36,7 +36,7 @@ function RankingsScreen() {
     });
   };
   useEffect(() => fetchMoviesList(), []);
-
+  let rank = 0;
   return (
     <div>
       {!moviesFetched ? (
@@ -46,9 +46,20 @@ function RankingsScreen() {
         <Typography variant="h5">Movie Rankings</Typography>
         <List>
           {moviesList.map((m)=>{
+            rank++;
             return <ListItem>
-              {m.score}
-              {m.title}
+              <Typography variant="h5">{`#${rank}`}</Typography>
+                <Card
+                  style={{
+                    display:`flex`,
+                    width:`100%`,
+                    justifyContent:`space-between`,
+                    marginLeft:`4em`
+                  }}>
+                  
+                  <Typography variant="h5">{m.title}</Typography>
+                  <Typography variant="h5">{m.score}</Typography>
+                </Card>              
             </ListItem>
           })}
         </List>

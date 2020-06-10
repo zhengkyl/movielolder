@@ -1,36 +1,87 @@
 import React, { useState } from "react";
-import "./App.css";
+// import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Navigation from "./Navigation";
+// import Navigation from "./Navigation";
 import RankingsScreen from "./RankingsScreen";
 import VoteScreen from "./VoteScreen";
 import AddMovieScreen from "./AddMovieScreen";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
+import ListAltIcon from "@material-ui/icons/ListAlt";
+
+import HowToVoteIcon from "@material-ui/icons/HowToVote";
+
+import MovieIcon from "@material-ui/icons/Movie";
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
 
-// import { Grid, makeStyles } from "@material-ui/core"
-
-const NAVIGATION_STATES = {
-  0: <RankingsScreen />,
-  1: <VoteScreen />,
-  2: <AddMovieScreen />
-};
+import { makeStyles } from "@material-ui/core";
+const useStyles = makeStyles((theme) => ({
+  app: {
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column-reverse",
+    height: `100vh`,
+    maxWidth: 1000,
+    margin: "0 auto",
+  },
+}));
 
 // const test = 2;
 function App() {
-  const [tab, setTab] = useState(1);
+  const classes = useStyles();
+  const [tab, setTab] = useState(window.location.pathname);
+
   const onTabChange = (event, newValue) => {
     setTab(newValue);
   };
 
-  // const [winner, setWinner] = useState(0);
-
   return (
-    <div className="App">
-      {NAVIGATION_STATES[tab]}
-      <Navigation tab={tab} onChange={onTabChange}></Navigation>
+    <div className={classes.app}>
+      <Router>
+        <BottomNavigation
+          value={tab}
+          onChange={onTabChange}
+          showLabels
+          className={classes.root}
+        >
+          <BottomNavigationAction
+            label="Rankings"
+            icon={<ListAltIcon />}
+            component={Link}
+            to="/leaderboard"
+            value="/leaderboard"
+          />
+          <BottomNavigationAction
+            label="Vote"
+            icon={<HowToVoteIcon />}
+            component={Link}
+            to="/"
+            value="/"
+          />
+          <BottomNavigationAction
+            label="Add Movie"
+            icon={<MovieIcon />}
+            component={Link}
+            to="/add"
+            value="/add"
+          />
+        </BottomNavigation>
+        <Switch>
+          <Route exact path="/leaderboard">
+            <RankingsScreen />
+          </Route>
+          <Route exact path="/">
+            <VoteScreen />
+          </Route>
+          <Route exact path="/add">
+            <AddMovieScreen />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
