@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // import Navigation from "./Navigation";
-import RankingsScreen from "./RankingsScreen";
-import VoteScreen from "./VoteScreen";
-import AddMovieScreen from "./AddMovieScreen";
+import RankingsScreen from "./components/RankingsScreen";
+import VoteScreen from "./components/VoteScreen";
+import AddMovieScreen from "./components/AddMovieScreen";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
