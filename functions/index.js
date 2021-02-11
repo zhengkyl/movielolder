@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
-
+const admin = require('firebase-admin');
+admin.initializeApp();
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -22,16 +23,13 @@ exports.onMovieAdded = functions.firestore
 const K = 100;
 const RATING_SCALER = 400;
 
-const admin = require('firebase-admin');
-admin.initializeApp();
-const db = admin.firestore();
 
-exports.updateElo = functions.https.onCall((data, context) =>{
+exports.updateElo = functions.https.onCall(async(data, context) =>{
     // console.log(data)
     const winnerId = data.winnerId;
     const loserId = data.loserId;
     // console.log(winnerId + " and " + loserId)
-
+    const db = await admin.firestore();
     const docRefW = db.collection("movies").doc(winnerId)
     const docRefL = db.collection("movies").doc(loserId)
 

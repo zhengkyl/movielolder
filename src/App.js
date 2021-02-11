@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 // import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-// import Navigation from "./Navigation";
-import RankingsScreen from "./components/RankingsScreen";
-import VoteScreen from "./components/VoteScreen";
-import AddMovieScreen from "./components/AddMovieScreen";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+// import RankingsScreen from "./components/RankingsScreen";
+// import VoteScreen from "./components/VoteScreen";
+// import AddMovieScreen from "./components/AddMovieScreen";
+// import BottomNavigation from "@material-ui/core/BottomNavigation";
+// import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
-import ListAltIcon from "@material-ui/icons/ListAlt";
+// import ListAltIcon from "@material-ui/icons/ListAlt";
 
-import HowToVoteIcon from "@material-ui/icons/HowToVote";
+// import HowToVoteIcon from "@material-ui/icons/HowToVote";
 
-import MovieIcon from "@material-ui/icons/Movie";
+// import MovieIcon from "@material-ui/icons/Movie";
+
+
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
 
-import { makeStyles } from "@material-ui/core";
+import NewGalleryView from "./views/NewGalleryView";
+
+import { CssBaseline, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   app: {
     textAlign: "center",
@@ -38,52 +41,57 @@ function App() {
   const onTabChange = (event, newValue) => {
     setTab(newValue);
   };
-
   return (
-    <div className={classes.app}>
-      <Router>
-        <BottomNavigation
-          value={tab}
-          onChange={onTabChange}
-          showLabels
-          className={classes.root}
-        >
-          <BottomNavigationAction
-            label="Rankings"
-            icon={<ListAltIcon />}
-            component={Link}
-            to="/leaderboard"
-            value="/leaderboard"
-          />
-          <BottomNavigationAction
-            label="Vote"
-            icon={<HowToVoteIcon />}
-            component={Link}
-            to="/"
-            value="/"
-          />
-          <BottomNavigationAction
-            label="Add Movie"
-            icon={<MovieIcon />}
-            component={Link}
-            to="/add"
-            value="/add"
-          />
-        </BottomNavigation>
-        <Switch>
-          <Route exact path="/leaderboard">
-            <RankingsScreen />
-          </Route>
-          <Route exact path="/">
-            <VoteScreen />
-          </Route>
-          <Route exact path="/add">
-            <AddMovieScreen />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <>
+      <CssBaseline />
+      <NewGalleryView />
+    </>
   );
+  // return (
+  //   <div className={classes.app}>
+  //     <Router>
+  //       <BottomNavigation
+  //         value={tab}
+  //         onChange={onTabChange}
+  //         showLabels
+  //         className={classes.root}
+  //       >
+  //         <BottomNavigationAction
+  //           label="Rankings"
+  //           icon={<ListAltIcon />}
+  //           component={Link}
+  //           to="/leaderboard"
+  //           value="/leaderboard"
+  //         />
+  //         <BottomNavigationAction
+  //           label="Vote"
+  //           icon={<HowToVoteIcon />}
+  //           component={Link}
+  //           to="/"
+  //           value="/"
+  //         />
+  //         <BottomNavigationAction
+  //           label="Add Movie"
+  //           icon={<MovieIcon />}
+  //           component={Link}
+  //           to="/add"
+  //           value="/add"
+  //         />
+  //       </BottomNavigation>
+  //       <Switch>
+  //         <Route exact path="/leaderboard">
+  //           <RankingsScreen />
+  //         </Route>
+  //         <Route exact path="/">
+  //           <VoteScreen />
+  //         </Route>
+  //         <Route exact path="/add">
+  //           <AddMovieScreen />
+  //         </Route>
+  //       </Switch>
+  //     </Router>
+  //   </div>
+  // );
 }
 
 export default App;
