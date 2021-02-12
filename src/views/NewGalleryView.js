@@ -8,13 +8,7 @@ import {
   Button,
   Paper,
 } from "@material-ui/core";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import GalleryLinksTable from "../components/GalleryLinksTable";
 
 const useStyles = makeStyles((theme) => ({
   createButton: {
@@ -45,23 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const createTableRow = (title, link, desc) => (
-  <>
-    <TableRow>
-      <TableCell style={{ borderBottom: "none" }}>
-        <Typography variant="h5">{title}</Typography>
-      </TableCell>
-      <TableCell style={{ borderBottom: "none" }} align="left">
-        <Typography variant="h6">{link}</Typography>
-      </TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell colSpan={2}>
-        <Typography>{desc}</Typography>
-      </TableCell>
-    </TableRow>
-  </>
-);
+
 export default function NewGalleryView() {
   const classes = useStyles();
 
@@ -126,35 +104,17 @@ export default function NewGalleryView() {
           </div>
         </div>
       </Paper>
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell colSpan={2}>
-                <Typography variant="h6">Gallery Links Preview</Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {createTableRow(
-              "Viewer",
-              `https://movielo.web.app/?gallery=${galleryId}`,
-              "Viewers can only VIEW galleries."
-            )}
-            {createTableRow(
-              "User",
-              `https://movielo.web.app/?gallery=${galleryId}&key=${userKey}`,
-              "Users can VOTE and ADD MOVIES to galleries."
-            )}
-            {createTableRow(
-              "Admin",
-              `https://movielo.web.app/?gallery=${galleryId}&key=${adminKey}`,
-              "Admins can REMOVE MOVIES, CHANGE LINKS, and DELETE galleries."
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button variant="contained" className={classes.createButton} color="primary">
+      <GalleryLinksTable
+        title="Gallery Links Preview"
+        galleryId={galleryId}
+        userKey={userKey}
+        adminKey={adminKey}
+      />
+      <Button
+        variant="contained"
+        className={classes.createButton}
+        color="primary"
+      >
         Create Gallery
       </Button>
     </>
