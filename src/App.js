@@ -14,17 +14,22 @@ import React, { useState } from "react";
 
 // import MovieIcon from "@material-ui/icons/Movie";
 
-
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
 
 import CreateGalleryView from "./views/CreateGalleryView";
-import NewGalleryView from "./views/NewGalleryView"
+import NewGalleryView from "./views/NewGalleryView";
 
-import { CssBaseline, Container, makeStyles } from "@material-ui/core";
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from "./theme"
+import {
+  CssBaseline,
+  Container,
+  makeStyles,
+  Tabs,
+  Tab,
+} from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 const useStyles = makeStyles((theme) => ({
   app: {
     textAlign: "center",
@@ -35,25 +40,68 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
   },
 }));
+// TabPanel and a11Props copied from Material UI Tab example
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
 
 // const test = 2;
 function App() {
   const classes = useStyles();
-  const [tab, setTab] = useState(window.location.pathname);
+  const [tab, setTab] = useState(0);
 
   const onTabChange = (event, newValue) => {
     setTab(newValue);
   };
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container maxWidth="md">
-        {/* <CreateGalleryView /> */}
-        <NewGalleryView/>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container maxWidth="md">
+          <Tabs
+            value={tab}
+            onChange={onTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Leaderboard" {...a11yProps(0)} />
+            <Tab label="Charts" {...a11yProps(1)} />
+            <Tab label="Vote" {...a11yProps(2)} />
+            <Tab label="Gallery" {...a11yProps(3)} />
+          </Tabs>
 
-      </Container>
-    </ThemeProvider>
+          <TabPanel value={tab} index={0}>
+            <CreateGalleryView />
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <NewGalleryView />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <CreateGalleryView />
+          </TabPanel>
+          <TabPanel value={tab} index={3}>
+            <NewGalleryView />
+          </TabPanel>
+        </Container>
+      </ThemeProvider>
     </>
   );
   // return (
