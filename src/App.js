@@ -19,7 +19,8 @@ import React, { useState } from "react";
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
 
-import NewGalleryView from "./views/NewGalleryView";
+import CreateGalleryView from "./views/CreateGalleryView";
+import NewGalleryView from "./views/NewGalleryView"
 
 import { CssBaseline, Container, makeStyles } from "@material-ui/core";
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -48,7 +49,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="md">
-        <NewGalleryView />
+        {/* <CreateGalleryView /> */}
+        <NewGalleryView/>
 
       </Container>
     </ThemeProvider>
