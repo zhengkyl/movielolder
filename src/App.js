@@ -21,7 +21,9 @@ import React, { useState } from "react";
 
 import NewGalleryView from "./views/NewGalleryView";
 
-import { CssBaseline, makeStyles } from "@material-ui/core";
+import { CssBaseline, Container, makeStyles } from "@material-ui/core";
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from "./theme"
 const useStyles = makeStyles((theme) => ({
   app: {
     textAlign: "center",
@@ -43,8 +45,13 @@ function App() {
   };
   return (
     <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NewGalleryView />
+      <Container maxWidth="md">
+        <NewGalleryView />
+
+      </Container>
+    </ThemeProvider>
     </>
   );
   // return (
