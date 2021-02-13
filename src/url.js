@@ -28,27 +28,39 @@ export async function galleryExists(galleryId) {
   const gallery = await galleryRef.get();
   return gallery.exists;
 }
+//moviesCount, 
+export async function getGalleryMetaData(galleryId) {
+  const galleryRef = getGalleryRef(galleryId);
+  const gallery = await galleryRef.get();
+  return gallery.data();
+}
 
-export async function getTopMovies(galleryId, number) {
+export async function getTopMovies(galleryId, number, prevEnd) {
   const moviesRef = getGalleryRef(galleryId).collection(
     process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
   );
+  let topMovies = moviesRef.orderBy("rating", "desc");
+  if (prevEnd) {
+    topMovies = topMovies.startAfter(prevEnd);
+  }
+  topMovies = topMovies.limit(number);
 
-  moviesRef.orderBy("rating").limit(number);
+  const snapshot = await topMovies.get();
+  return snapshot.docs.map((doc) => doc.data());
 }
 
-export async function subscribeTopMoviesUpdates(galleryId, number, updateCallback) {
-  const moviesRef = getGalleryRef(galleryId).collection(
-    process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
-  );
-  const unsubscribe = moviesRef
-    .orderBy("rating")
-    .limit(number)
-    .onSnapshot((snapshot) => {
-      updateCallback(snapshot.data());
-    });
-  return unsubscribe;
-}
+// export async function subscribeTopMoviesUpdates(galleryId, number, updateCallback) {
+//   const moviesRef = getGalleryRef(galleryId).collection(
+//     process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
+//   );
+//   const unsubscribe = moviesRef
+//     .orderBy("rating", )
+//     .limit(number)
+//     .onSnapshot((snapshot) => {
+//       updateCallback(snapshot.data());
+//     });
+//   return unsubscribe;
+// }
 // we should NEVER pull from gallery_secrets
 // but we can push or pull from galleries
 // also i mean we as in me

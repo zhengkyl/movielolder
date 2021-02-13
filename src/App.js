@@ -20,6 +20,7 @@ import React, { useState } from "react";
 
 import CreateGalleryView from "./views/CreateGalleryView";
 import NewGalleryView from "./views/NewGalleryView";
+import LeaderboardView from "./views/LeaderboardView"
 
 import {
   CssBaseline,
@@ -89,7 +90,7 @@ function App() {
           </Tabs>
 
           <TabPanel value={tab} index={0}>
-            <CreateGalleryView />
+            <LeaderboardView metaData={{moviesCount:67}}/>
           </TabPanel>
           <TabPanel value={tab} index={1}>
             <NewGalleryView />
