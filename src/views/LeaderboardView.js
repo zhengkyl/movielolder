@@ -9,8 +9,8 @@ import {
   TableCell,
   TablePagination,
   Typography,
-  TableFooter,
 } from "@material-ui/core";
+import { getTopMovies } from "../url";
 
 function LeaderboardHeader({ headers }) {
   return (
@@ -27,13 +27,25 @@ function LeaderboardHeader({ headers }) {
 }
 
 export default function LeaderboardView({ metaData, ...other }) {
-  const { moviesCount } = metaData;
+  const { moviesCount, galleryId } = metaData;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [movieDocList, setMovieDocList] = useState([]);
 
-  const handleChangePage = useCallback((e, newPage) => setPage(newPage), [
-    setPage,
-  ]);
+  const updateMovieList = useCallback(async () => {
+    const lastDoc = movieDocList[movieDocList.length - 1];
+    const newList = await getTopMovies(galleryId, rowsPerPage, lastDoc);
+    console.log("newlist", newList);
+    setMovieDocList(newList);
+  }, [galleryId, movieDocList, rowsPerPage]);
+
+  const handleChangePage = useCallback(
+    (e, newPage) => {
+      setPage(newPage);
+      updateMovieList();
+    },
+    [setPage, updateMovieList]
+  );
 
   const handleChangeRowsPerPage = useCallback(
     (e) => {
@@ -42,17 +54,34 @@ export default function LeaderboardView({ metaData, ...other }) {
     },
     [setRowsPerPage, setPage]
   );
-
+  
+  //TODO i don't love this vvvv
   useEffect(() => {
-    //call for new things? using limit
-  }, [page]);
+    (async function () {
+      const newList = await getTopMovies(galleryId, rowsPerPage);
+      setMovieDocList(newList);
+    })();
+  }, [galleryId, rowsPerPage]);
   return (
     <>
       <Paper>
         <TableContainer>
           <Table>
             <LeaderboardHeader headers={["Rank", "Movie", "ELO"]} />
-            <TableBody></TableBody>
+            <TableBody>
+              {console.log("renders twice on page update")}
+              {movieDocList.map((movieDoc, movieIndex) => {
+                const movie = movieDoc.data();
+                const movieRank = movieIndex + 1 + page * rowsPerPage;
+                return (
+                  <TableRow key={movieRank}>
+                    <TableCell>{movieRank}</TableCell>
+                    <TableCell>{movie.title}</TableCell>
+                    <TableCell>{movie.rating}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
           </Table>
         </TableContainer>
         <TablePagination

@@ -47,24 +47,15 @@ export default function NewGalleryView() {
   const [userKey, setUserKey] = useState();
   const [adminKey, setAdminKey] = useState();
 
-  const updateGalleryId = useCallback(
-    (e) => {
-      setGalleryId(e.target.value);
-    },
-    [setGalleryId]
-  );
-  const updateUserKey = useCallback(
-    (e) => {
-      setUserKey(e.target.value);
-    },
-    [setUserKey]
-  );
-  const updateAdminKey = useCallback(
-    (e) => {
-      setAdminKey(e.target.value);
-    },
-    [setAdminKey]
-  );
+  const updateGalleryId = useCallback((e) => setGalleryId(e.target.value), [
+    setGalleryId,
+  ]);
+  const updateUserKey = useCallback((e) => setUserKey(e.target.value), [
+    setUserKey,
+  ]);
+  const updateAdminKey = useCallback((e) => setAdminKey(e.target.value), [
+    setAdminKey,
+  ]);
   return (
     <>
       <Typography variant="h2">Create a new gallery</Typography>

@@ -8,11 +8,9 @@ import React, { useState } from "react";
 // import BottomNavigation from "@material-ui/core/BottomNavigation";
 // import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
-// import ListAltIcon from "@material-ui/icons/ListAlt";
-
-// import HowToVoteIcon from "@material-ui/icons/HowToVote";
-
-// import MovieIcon from "@material-ui/icons/Movie";
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import HowToVoteIcon from "@material-ui/icons/HowToVote";
+import MovieIcon from "@material-ui/icons/Movie";
 
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
@@ -83,14 +81,13 @@ function App() {
             textColor="primary"
             centered
           >
-            <Tab label="Leaderboard" {...a11yProps(0)} />
-            <Tab label="Charts" {...a11yProps(1)} />
-            <Tab label="Vote" {...a11yProps(2)} />
-            <Tab label="Gallery" {...a11yProps(3)} />
+            <Tab label="Charts" {...a11yProps(0)} />
+            <Tab label="Vote" {...a11yProps(1)} />
+            <Tab label="Gallery" {...a11yProps(2)} />
           </Tabs>
 
           <TabPanel value={tab} index={0}>
-            <LeaderboardView metaData={{moviesCount:67}}/>
+            <LeaderboardView metaData={{moviesCount:67, galleryId:"kgg"}}/>
           </TabPanel>
           <TabPanel value={tab} index={1}>
             <NewGalleryView />

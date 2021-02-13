@@ -46,7 +46,7 @@ export async function getTopMovies(galleryId, number, prevEnd) {
   topMovies = topMovies.limit(number);
 
   const snapshot = await topMovies.get();
-  return snapshot.docs.map((doc) => doc.data());
+  return snapshot.docs;
 }
 
 // export async function subscribeTopMoviesUpdates(galleryId, number, updateCallback) {
