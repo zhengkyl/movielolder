@@ -8,10 +8,6 @@ import React, { useState } from "react";
 // import BottomNavigation from "@material-ui/core/BottomNavigation";
 // import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import HowToVoteIcon from "@material-ui/icons/HowToVote";
-import MovieIcon from "@material-ui/icons/Movie";
-
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
@@ -19,7 +15,7 @@ import MovieIcon from "@material-ui/icons/Movie";
 import CreateGalleryView from "./views/CreateGalleryView";
 import NewGalleryView from "./views/NewGalleryView";
 import LeaderboardView from "./views/LeaderboardView"
-
+import MovieSearchView from "./views/MovieSearchView"
 import {
   CssBaseline,
   Container,
@@ -62,13 +58,15 @@ function a11yProps(index) {
 }
 
 // const test = 2;
-function App() {
+function App({galleryId, key}) {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
 
   const onTabChange = (event, newValue) => {
     setTab(newValue);
   };
+
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -90,7 +88,7 @@ function App() {
             <LeaderboardView metaData={{moviesCount:67, galleryId:"kgg"}}/>
           </TabPanel>
           <TabPanel value={tab} index={1}>
-            <NewGalleryView />
+            <MovieSearchView galleryId={galleryId}/>
           </TabPanel>
           <TabPanel value={tab} index={2}>
             <CreateGalleryView />
@@ -102,51 +100,6 @@ function App() {
       </ThemeProvider>
     </>
   );
-  // return (
-  //   <div className={classes.app}>
-  //     <Router>
-  //       <BottomNavigation
-  //         value={tab}
-  //         onChange={onTabChange}
-  //         showLabels
-  //         className={classes.root}
-  //       >
-  //         <BottomNavigationAction
-  //           label="Rankings"
-  //           icon={<ListAltIcon />}
-  //           component={Link}
-  //           to="/leaderboard"
-  //           value="/leaderboard"
-  //         />
-  //         <BottomNavigationAction
-  //           label="Vote"
-  //           icon={<HowToVoteIcon />}
-  //           component={Link}
-  //           to="/"
-  //           value="/"
-  //         />
-  //         <BottomNavigationAction
-  //           label="Add Movie"
-  //           icon={<MovieIcon />}
-  //           component={Link}
-  //           to="/add"
-  //           value="/add"
-  //         />
-  //       </BottomNavigation>
-  //       <Switch>
-  //         <Route exact path="/leaderboard">
-  //           <RankingsScreen />
-  //         </Route>
-  //         <Route exact path="/">
-  //           <VoteScreen />
-  //         </Route>
-  //         <Route exact path="/add">
-  //           <AddMovieScreen />
-  //         </Route>
-  //       </Switch>
-  //     </Router>
-  //   </div>
-  // );
 }
 
 export default App;

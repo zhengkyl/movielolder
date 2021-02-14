@@ -7,62 +7,40 @@ import {
   makeStyles,
   // CardActionArea,
   CardActions,
-  Button
+  Button,
   //   IconButton,
   //   Collapse,
   //   Paper
 } from "@material-ui/core";
 import PosterImage from "./PosterImage";
-import firebase from "./firebase";
+import { addMovieToGallery } from "../privateData";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     height: "20vh",
-    width: "90%",
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   media: {
     height: "100%",
-    width: "auto"
-  }
+    width: "auto",
+  },
 }));
 
-const COLLECTION_NAME = "movies";
-
-function SearchResultCard({ id, posterPath, title, summary }) {
-  const [addable, setAddable] = useState(true);
+function SearchResultCard({ galleryId, id, posterPath, title, summary, added }) {
+  const [addable, setAddable] = useState(!added);
   const classes = useStyles();
   title = title ? title : "No Title Available";
   summary = summary ? summary : "No Summary Available";
 
-  const docRef = firebase
-    .firestore()
-    .collection(process.env.REACT_APP_MOVIES_COLLECTION_NAME)
-    .doc(`${id}`);
-  docRef.get().then(docSnapshot => {
-    if (docSnapshot.exists) {
-      setAddable(false);
+  const onAdd = async () => {
+    const res = await addMovieToGallery(galleryId, { id, title, summary, posterPath });
+    if (res) {
+      setAddable(false)
+    } else {
+      // show something like error
     }
-  });
-
-  const onAdd = () => {
-    // console.log(movie);
-    const db = firebase.firestore();
-    db.collection(COLLECTION_NAME)
-      .doc(`${id}`)
-      .set({
-        title,
-        summary,
-        posterPath,
-      })
-      .then(function() {
-        console.log("Document successfully written!");
-        setAddable(false);
-      })
-      .catch(function(error) {
-        console.error("Error writing document: ", error);
-      });
+    console.log(res)
   };
   return (
     <Card className={classes.card}>
@@ -75,7 +53,7 @@ function SearchResultCard({ id, posterPath, title, summary }) {
           style={{
             display: "flex",
             flexDirection: "row",
-            alignItems: "flex-start"
+            alignItems: "flex-start",
           }}
         >
           <Typography paragraph style={{ flex: "1" }}>

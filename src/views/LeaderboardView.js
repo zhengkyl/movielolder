@@ -10,14 +10,14 @@ import {
   TablePagination,
   Typography,
 } from "@material-ui/core";
-import { getTopMovies } from "../url";
+import { getTopMovies } from "../privateData";
 
 function LeaderboardHeader({ headers }) {
   return (
     <TableHead>
       <TableRow>
         {headers.map((header, index) => (
-          <TableCell key={index}>
+          <TableCell key={index} style={index===1 ? {width:"100%"}:{}}>
             <Typography variant="h6">{header}</Typography>
           </TableCell>
         ))}
@@ -67,7 +67,7 @@ export default function LeaderboardView({ metaData, ...other }) {
       <Paper>
         <TableContainer>
           <Table>
-            <LeaderboardHeader headers={["Rank", "Movie", "ELO"]} />
+            <LeaderboardHeader headers={["Rank", "Movie", "Rating", "Wins", "Losses"]} />
             <TableBody>
               {console.log("renders twice on page update")}
               {movieDocList.map((movieDoc, movieIndex) => {
@@ -75,9 +75,11 @@ export default function LeaderboardView({ metaData, ...other }) {
                 const movieRank = movieIndex + 1 + page * rowsPerPage;
                 return (
                   <TableRow key={movieRank}>
-                    <TableCell>{movieRank}</TableCell>
+                    <TableCell align="right">{movieRank}</TableCell>
                     <TableCell>{movie.title}</TableCell>
-                    <TableCell>{movie.rating}</TableCell>
+                    <TableCell align="right">{movie.rating}</TableCell>
+                    <TableCell align="right">{movie.wins}</TableCell>
+                    <TableCell align="right">{movie.losses}</TableCell>
                   </TableRow>
                 );
               })}

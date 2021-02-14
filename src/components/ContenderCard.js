@@ -4,8 +4,6 @@ import React from "react";
 // import movie from "../images/movie.jpg";
 import PosterImage from "./PosterImage"
 
-import clsx from 'clsx';
-
 import {
   Card,
   CardMedia,

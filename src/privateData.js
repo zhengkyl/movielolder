@@ -1,20 +1,8 @@
 // https://blog.excalidraw.com/end-to-end-encryption/
 import firebase from "./components/firebase";
 
-export async function getGalleryAndPermission() {
-  const searchString = window.location.search;
-  const urlParams = new URLSearchParams(searchString);
+export const getMovieSearchResults = firebase.functions().httpsCallable("getMovieSearchResults")
 
-  const galleryId = urlParams.get("gallery");
-  const permissionPass = urlParams.get("pp");
-
-  //https://blog.excalidraw.com/end-to-end-encryption/
-  // const key = await window.crypto.subtle.generateKey(
-  //   { name: "AES-GCM", length: 128 },
-  //   true, // extractable
-  //   ["encrypt", "decrypt"]
-  // );
-}
 
 function getGalleryRef(galleryId) {
   return firebase
@@ -49,20 +37,18 @@ export async function getTopMovies(galleryId, number, prevEnd) {
   return snapshot.docs;
 }
 
-// export async function subscribeTopMoviesUpdates(galleryId, number, updateCallback) {
-//   const moviesRef = getGalleryRef(galleryId).collection(
-//     process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
-//   );
-//   const unsubscribe = moviesRef
-//     .orderBy("rating", )
-//     .limit(number)
-//     .onSnapshot((snapshot) => {
-//       updateCallback(snapshot.data());
-//     });
-//   return unsubscribe;
-// }
-// we should NEVER pull from gallery_secrets
-// but we can push or pull from galleries
-// also i mean we as in me
+// this might need to be serverside
+export async function addMovieToGallery(galleryId, {id, title, summary, posterPath}) {
+  const moviesRef = getGalleryRef(galleryId).collection(
+    process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
+  );
+  try {
+    await moviesRef.doc(id).set({title:title,summary:summary,posterPath:posterPath})
+    return true
+  }
+  catch (err) {
+    return false;
+  }
+}
 
 // galleries  >  movies [movieId, posterPath, rating]
