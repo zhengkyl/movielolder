@@ -10,3 +10,5 @@ app.use(cors({ origin: true }))
   .get('*', (_,res)=>res.status(404).json({success:false, data:"Endpoint does not exist"}))
 
 module.exports = app
+
+// https://itnext.io/running-express-js-on-firebase-cloud-functions-a20b536c6aec
