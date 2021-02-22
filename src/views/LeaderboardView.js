@@ -17,7 +17,7 @@ function LeaderboardHeader({ headers }) {
     <TableHead>
       <TableRow>
         {headers.map((header, index) => (
-          <TableCell key={index} style={index===1 ? {width:"100%"}:{}}>
+          <TableCell key={index} style={index === 1 ? { width: "100%" } : {}}>
             <Typography variant="h6">{header}</Typography>
           </TableCell>
         ))}
@@ -32,17 +32,16 @@ export default function LeaderboardView({ metaData, ...other }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [movieDocList, setMovieDocList] = useState([]);
 
-  const updateMovieList = useCallback(async () => {
-    const lastDoc = movieDocList[movieDocList.length - 1];
-    const newList = await getTopMovies(galleryId, rowsPerPage, lastDoc);
-    console.log("newlist", newList);
-    setMovieDocList(newList);
-  }, [galleryId, movieDocList, rowsPerPage]);
+  const updateMovieList = useCallback(async (reqPage) => {
+    // change page from 0 to 1 based
+    const newList = await getTopMovies(galleryId, rowsPerPage, reqPage + 1);
+    setMovieDocList(newList.success ? newList.data : []);
+  }, [galleryId, rowsPerPage]);
 
   const handleChangePage = useCallback(
     (e, newPage) => {
       setPage(newPage);
-      updateMovieList();
+      updateMovieList(newPage)
     },
     [setPage, updateMovieList]
   );
@@ -54,24 +53,22 @@ export default function LeaderboardView({ metaData, ...other }) {
     },
     [setRowsPerPage, setPage]
   );
-  
-  //TODO i don't love this vvvv
+
   useEffect(() => {
-    (async function () {
-      const newList = await getTopMovies(galleryId, rowsPerPage);
-      setMovieDocList(newList);
-    })();
-  }, [galleryId, rowsPerPage]);
+    updateMovieList(0)
+  }, [updateMovieList]);
   return (
     <>
       <Paper>
         <TableContainer>
           <Table>
-            <LeaderboardHeader headers={["Rank", "Movie", "Rating", "Wins", "Losses"]} />
+            <LeaderboardHeader
+              headers={["Rank", "Movie", "Rating", "Wins", "Losses"]}
+            />
             <TableBody>
               {console.log("renders twice on page update")}
               {movieDocList.map((movieDoc, movieIndex) => {
-                const movie = movieDoc.data();
+                const movie = movieDoc;
                 const movieRank = movieIndex + 1 + page * rowsPerPage;
                 return (
                   <TableRow key={movieRank}>
