@@ -35,7 +35,7 @@ export default function LeaderboardView({ metaData, ...other }) {
   const updateMovieList = useCallback(async (reqPage) => {
     // change page from 0 to 1 based
     const newList = await getTopMovies(galleryId, rowsPerPage, reqPage + 1);
-    setMovieDocList(newList.success ? newList.data : []);
+    setMovieDocList(newList.data);
   }, [galleryId, rowsPerPage]);
 
   const handleChangePage = useCallback(

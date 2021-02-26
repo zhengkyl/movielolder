@@ -9,29 +9,31 @@ import {
   ListItem,
 } from "@material-ui/core";
 
-import { getMovieSearchResults } from "../privateData";
+import { getSearchMovieResults } from "../privateData";
+// import { getMovieSearchResults } from "../privateData";
 import SearchResultCard from "../components/SearchResultCard";
 
-export default function MovieSearchView({galleryId}) {
-  const [movieList, setMovieList] = useState([
-    {
-      id:'330457',
-      posterPath: "/qXsndsv3WOoxszmdlvTWeY688eK.jpg",
-      summary:
-        "Elsa, Anna, Kristoff and Olaf head far into the forest to learn the truth about an ancient mystery of their kingdom.",
-      title: "Frozen II",
-      added:true,
-    },
-  ]);
+export default function MovieSearchView({ galleryId }) {
+  const [movieList, setMovieList] = useState([]);
+  const [query, setQuery] = useState("");
+  const handleChangeQuery = useCallback(
+    (e) => setQuery(encodeURIComponent(e.target.value)),
+    [setQuery]
+  );
 
   const handleMovieSearch = useCallback(
+    //encodeURIComponent()
     async (e) => {
       e.preventDefault(); //stop reload
-      const movieResults = await getMovieSearchResults({query:e.target.value, galleryId: galleryId});
-      console.log("hithisis",movieResults)
-      setMovieList(movieResults.data.movieList);
+      console.log(e)
+      const movieResults = await getSearchMovieResults(
+        encodeURIComponent(query),
+        1
+      );
+      console.log("hithisis", movieResults);
+      setMovieList(movieResults.data);
     },
-    [setMovieList]
+    [query]
   );
 
   return (
@@ -41,7 +43,7 @@ export default function MovieSearchView({galleryId}) {
           label="Search for movies..."
           type="search"
           variant="outlined"
-          // onChange={}
+          onChange={handleChangeQuery}
         />
       </form>
       <List>

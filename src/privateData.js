@@ -2,11 +2,16 @@
 import firebase from "./components/firebase";
 
 const API_BASE = "https://us-central1-movielo.cloudfunctions.net/api"
-
+//TODO do {data, error, loading} like in swr
 
 export async function getTopMovies(galleryId, number, page) {
-  const movies = await fetch(`${API_BASE}/movies/${galleryId}?limit=${number}&page=${page}&sortBy=rating&order=asc`)
-  return movies.json();
+  const movies = await fetch(`${API_BASE}/galleries/${galleryId}/movies?limit=${number}&page=${page}&sortBy=rating&order=asc`)
+  return movies.ok ? movies.json(): {data:[]};
+}
+
+export async function getSearchMovieResults(queryString, page) {
+  const movies = await fetch(`${API_BASE}/search/movies?query=${queryString}&page=${page}`)
+  return movies.ok ? movies.json(): {data:[]};
 }
 
 // EVERYTHING BELOW MUST BE REDONE
