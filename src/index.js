@@ -5,7 +5,7 @@ import { getGalleryIdandKey } from './publicData';
 import * as serviceWorker from './serviceWorker';
 
 const {galleryId, key} = getGalleryIdandKey()
-ReactDOM.render(<App galleryId={galleryId} key={key}/>, document.getElementById('root'));
+ReactDOM.render(<App galleryId={galleryId} passkey={key}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
