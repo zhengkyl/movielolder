@@ -1,6 +1,6 @@
 const {firestore} = require("../../firestore");
 
-async function resolveCollectionQuery(collectionRef, res, next) {
+async function resolveCollectionQuery({collectionRef, limit, page}, res, next) {
   try {
     const snapshot = await collectionRef.get();
     const exists = !snapshot.empty;
@@ -41,8 +41,7 @@ exports.getMovies = async function (req, res, next) {
     .collection(`galleries/${galleryId}/movies`)
     .orderBy(sortBy, order)
     .limit(page * limit);
-
-  return resolveCollectionQuery(moviesRef, res, next);
+  return resolveCollectionQuery({collectionRef:moviesRef, limit, page}, res, next);
 };
 
 
@@ -57,8 +56,8 @@ exports.getGalleries = async function (req, res, next) {
 
   const galleriesRef = firestore
     .collection("galleries")
-    .order(sortBy, order)
+    .orderBy(sortBy, order)
     .limit(page * limit);
 
-  return resolveCollectionQuery(galleriesRef, res, next);
+  return resolveCollectionQuery({collectionRef:galleriesRef, limit, page}, res, next);
 };
