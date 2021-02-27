@@ -16,6 +16,7 @@ exports.getMovieResults = async function (req, res, next) {
     if (result.ok) {
       movieResults = data.results.map((movie) => {
         return {
+          id:movie.id,
           posterPath: movie.poster_path,
           summary: movie.overview,
           title: movie.title,

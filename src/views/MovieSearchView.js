@@ -10,10 +10,20 @@ import {
 } from "@material-ui/core";
 
 import { getSearchMovieResults } from "../privateData";
-// import { getMovieSearchResults } from "../privateData";
 import SearchResultCard from "../components/SearchResultCard";
 
+const useStyles = makeStyles((theme) => ({
+  searchBox:{
+    width:"100%",
+  },
+  form:{
+    padding:theme.spacing(2)
+  }
+}));
+
 export default function MovieSearchView({ galleryId }) {
+  const classes = useStyles()
+
   const [movieList, setMovieList] = useState([]);
   const [query, setQuery] = useState("");
   const handleChangeQuery = useCallback(
@@ -30,7 +40,6 @@ export default function MovieSearchView({ galleryId }) {
         encodeURIComponent(query),
         1
       );
-      console.log("hithisis", movieResults);
       setMovieList(movieResults.data);
     },
     [query]
@@ -38,18 +47,25 @@ export default function MovieSearchView({ galleryId }) {
 
   return (
     <>
-      <form onSubmit={handleMovieSearch}>
+      <form onSubmit={handleMovieSearch} className={classes.form}>
         <TextField
           label="Search for movies..."
           type="search"
           variant="outlined"
           onChange={handleChangeQuery}
+          className={classes.searchBox}
         />
       </form>
       <List>
         {movieList.map((movie) => (
           <ListItem key={movie.id}>
-            <SearchResultCard galleryId={galleryId} {...movie} />
+            <SearchResultCard galleryId={galleryId}
+              id={movie.id}
+              posterPath={movie.posterPath}
+              summary={movie.summary}
+              title={movie.title}
+              // added={movie.}
+              />
           </ListItem>
         ))}
       </List>

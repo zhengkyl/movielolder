@@ -5,7 +5,7 @@ const API_BASE = "https://us-central1-movielo.cloudfunctions.net/api"
 //TODO do {data, error, loading} like in swr
 
 export async function getTopMovies(galleryId, number, page) {
-  const movies = await fetch(`${API_BASE}/galleries/${galleryId}/movies?limit=${number}&page=${page}&sortBy=rating&order=asc`)
+  const movies = await fetch(`${API_BASE}/galleries/${galleryId}/movies?limit=${number}&page=${page}&sortBy=rating&order=desc`)
   return movies.ok ? movies.json(): {data:[]};
 }
 

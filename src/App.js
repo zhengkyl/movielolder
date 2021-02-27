@@ -58,7 +58,7 @@ function a11yProps(index) {
 }
 
 // const test = 2;
-function App({galleryId, key}) {
+function App({galleryId, passkey}) {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
 
