@@ -1,5 +1,5 @@
 // https://blog.excalidraw.com/end-to-end-encryption/
-import firebase from "./components/firebase";
+// import firebase from "./components/firebase";
 
 const API_BASE = "https://us-central1-movielo.cloudfunctions.net/api"
 //TODO do {data, error, loading} like in swr
@@ -14,42 +14,55 @@ export async function getSearchMovieResults(queryString, page) {
   return movies.ok ? movies.json(): {data:[]};
 }
 
-// EVERYTHING BELOW MUST BE REDONE
-export const getMovieSearchResults = firebase.functions().httpsCallable("getMovieSearchResults")
+export async function postCreateGallery(galleryId, userKey, adminKey) {
+  const response = await fetch(`${API_BASE}/edit/${galleryId}/create`,{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({userKey, adminKey})
+  })
 
-function getGalleryRef(galleryId) {
-  return firebase
-    .firestore()
-    .collection(process.env.REACT_APP_GALLERIES_COLLECTION_NAME)
-    .doc(galleryId);
+  // console.log(response)
+  return response.json();
 }
 
-export async function galleryExists(galleryId) {
-  const galleryRef = getGalleryRef(galleryId);
-  const gallery = await galleryRef.get();
-  return gallery.exists;
-}
-//moviesCount, 
-export async function getGalleryMetaData(galleryId) {
-  const galleryRef = getGalleryRef(galleryId);
-  const gallery = await galleryRef.get();
-  return gallery.data();
-}
+// // EVERYTHING BELOW MUST BE REDONE
+// export const getMovieSearchResults = firebase.functions().httpsCallable("getMovieSearchResults")
+
+// function getGalleryRef(galleryId) {
+//   return firebase
+//     .firestore()
+//     .collection(process.env.REACT_APP_GALLERIES_COLLECTION_NAME)
+//     .doc(galleryId);
+// }
+
+// export async function galleryExists(galleryId) {
+//   const galleryRef = getGalleryRef(galleryId);
+//   const gallery = await galleryRef.get();
+//   return gallery.exists;
+// }
+// //moviesCount, 
+// export async function getGalleryMetaData(galleryId) {
+//   const galleryRef = getGalleryRef(galleryId);
+//   const gallery = await galleryRef.get();
+//   return gallery.data();
+// }
 
 
 
-// this might need to be serverside
-export async function addMovieToGallery(galleryId, {id, title, summary, posterPath}) {
-  const moviesRef = getGalleryRef(galleryId).collection(
-    process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
-  );
-  try {
-    await moviesRef.doc(id).set({title:title,summary:summary,posterPath:posterPath})
-    return true
-  }
-  catch (err) {
-    return false;
-  }
-}
+// // this might need to be serverside
+// export async function addMovieToGallery(galleryId, {id, title, summary, posterPath}) {
+//   const moviesRef = getGalleryRef(galleryId).collection(
+//     process.env.REACT_APP_GALLERIES_MOVIES_COLLECTION_NAME
+//   );
+//   try {
+//     await moviesRef.doc(id).set({title:title,summary:summary,posterPath:posterPath})
+//     return true
+//   }
+//   catch (err) {
+//     return false;
+//   }
+// }
 
 // galleries  >  movies [movieId, posterPath, rating]

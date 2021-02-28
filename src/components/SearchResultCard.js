@@ -12,7 +12,7 @@ import {
   //   Paper
 } from "@material-ui/core";
 import PosterImage from "./PosterImage";
-import { addMovieToGallery } from "../privateData";
+// import { addMovieToGallery } from "../privateData";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -48,17 +48,17 @@ function SearchResultCard({
   summary = summary ? summary : "No Summary Available";
 
   const onAdd = async () => {
-    const res = await addMovieToGallery(galleryId, {
-      id,
-      title,
-      summary,
-      posterPath,
-    });
-    if (res) {
-      setAddable(false);
-    } else {
-      // show something like error
-    }
+    // const res = await addMovieToGallery(galleryId, {
+    //   id,
+    //   title,
+    //   summary,
+    //   posterPath,
+    // });
+    // if (res) {
+    //   setAddable(false);
+    // } else {
+    //   // show something like error
+    // }
   };
   return (
     <Card className={classes.card}>

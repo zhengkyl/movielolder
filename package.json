@@ -17,7 +17,8 @@
     "react-scripts": "3.4.0",
     "react-spring": "^9.0.0-rc.3",
     "react-swipeable": "^5.5.1",
-    "react-use-gesture": "^7.0.16"
+    "react-use-gesture": "^7.0.16",
+    "swr": "^0.4.2"
   },
   "scripts": {
     "start": "react-scripts start",

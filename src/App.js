@@ -14,8 +14,8 @@ import React, { useState } from "react";
 
 import CreateGalleryView from "./views/CreateGalleryView";
 import NewGalleryView from "./views/NewGalleryView";
-import LeaderboardView from "./views/LeaderboardView"
-import MovieSearchView from "./views/MovieSearchView"
+import LeaderboardView from "./views/LeaderboardView";
+import MovieSearchView from "./views/MovieSearchView";
 import {
   CssBaseline,
   Container,
@@ -58,14 +58,13 @@ function a11yProps(index) {
 }
 
 // const test = 2;
-function App({galleryId, passkey}) {
+function App({ galleryId, passkey }) {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
 
   const onTabChange = (event, newValue) => {
     setTab(newValue);
   };
-
 
   return (
     <>
@@ -83,16 +82,16 @@ function App({galleryId, passkey}) {
             <Tab label="Vote" {...a11yProps(1)} />
             <Tab label="Gallery" {...a11yProps(2)} />
           </Tabs>
-
           <TabPanel value={tab} index={0}>
-            <LeaderboardView metaData={{moviesCount:67, galleryId:"kgg"}}/>
-          </TabPanel>
-          <TabPanel value={tab} index={1}>
-            <MovieSearchView galleryId={galleryId}/>
-          </TabPanel>
-          <TabPanel value={tab} index={2}>
             <CreateGalleryView />
           </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <MovieSearchView galleryId={galleryId} />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <LeaderboardView metaData={{ moviesCount: 67, galleryId: "kgg" }} />
+          </TabPanel>
+
           <TabPanel value={tab} index={3}>
             <NewGalleryView />
           </TabPanel>

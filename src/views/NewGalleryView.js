@@ -42,10 +42,7 @@ export default function NewGalleryView({ galleryId, userKey, adminKey }) {
         galleryId={galleryId}
         userKey={userKey}
         adminKey={adminKey}
-      />
-
-
-      
+      />  
     </>
   );
 }

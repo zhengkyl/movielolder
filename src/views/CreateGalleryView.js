@@ -9,7 +9,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import GalleryLinksTable from "../components/GalleryLinksTable";
-
+import {postCreateGallery} from "../privateData"
 const useStyles = makeStyles((theme) => ({
   createButton: {
     display: "block",
@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const inputProps={ pattern: "[A-Za-z0-9]{4,20}"}
+
 export default function NewGalleryView() {
   const classes = useStyles();
 
@@ -56,58 +58,76 @@ export default function NewGalleryView() {
   const updateAdminKey = useCallback((e) => setAdminKey(e.target.value), [
     setAdminKey,
   ]);
+
+  const handleSubmit = useCallback(async(e)=>{
+    e.preventDefault()
+    console.log("hi submited")
+    await postCreateGallery(galleryId, userKey, adminKey)
+  },[galleryId, userKey, adminKey])
   return (
     <>
       <Typography variant="h2">Create a new gallery</Typography>
-      <Paper className={classes.block}>
-        <Typography variant="h6">Gallery Links Setup</Typography>
-        <Typography variant="body1">
-          Choose a unique identifier for your gallery. (3-20 alphanumeric
-          characters)
-        </Typography>
-        <TextField
-          id="gallery-id-input"
-          label="Gallery ID"
-          variant="outlined"
-          onChange={updateGalleryId}
-          fullWidth
+      <form onSubmit={handleSubmit}>
+        <Paper className={classes.block}>
+          <Typography variant="h6">Gallery Links Setup</Typography>
+          <Typography variant="body1">
+            Choose a unique identifier for your gallery.
+          </Typography>
+
+          <TextField
+            id="gallery-id-input"
+            label="Gallery ID"
+            variant="outlined"
+            onChange={updateGalleryId}
+            fullWidth
+            required
+            inputProps={inputProps}
+            helperText="3-20 letters/numbers"
+          />
+          <div className={classes.keyBlock}>
+            <div>
+              <Typography variant="body1">Choose a user key.</Typography>
+              <TextField
+                id="user-key-input"
+                label="User Key"
+                variant="outlined"
+                onChange={updateUserKey}
+                fullWidth
+                required
+                inputProps={inputProps}
+                helperText="3-20 letters/numbers"
+              />
+            </div>
+            <div>
+              <Typography variant="body1">Choose an admin key.</Typography>
+              <TextField
+                id="admin-key-input"
+                label="Admin Key"
+                variant="outlined"
+                onChange={updateAdminKey}
+                fullWidth
+                required
+                inputProps={inputProps}
+                helperText="3-20 letters/numbers"
+              />
+            </div>
+          </div>
+        </Paper>
+        <GalleryLinksTable
+          title="Gallery Links Preview"
+          galleryId={galleryId}
+          userKey={userKey}
+          adminKey={adminKey}
         />
-        <div className={classes.keyBlock}>
-          <div>
-            <Typography variant="body1">Choose a user key.</Typography>
-            <TextField
-              id="user-key-input"
-              label="User Key"
-              variant="outlined"
-              onChange={updateUserKey}
-              fullWidth
-            />
-          </div>
-          <div>
-            <Typography variant="body1">Choose an admin key.</Typography>
-            <TextField
-              id="admin-key-input"
-              label="Admin Key"
-              variant="outlined"
-              onChange={updateAdminKey}
-              fullWidth
-            />
-          </div>
-        </div>
-      </Paper>
-      <GalleryLinksTable
-        title="Gallery Links Preview"
-        galleryId={galleryId}
-        userKey={userKey}
-        adminKey={adminKey}
-      />
-      <Button
-        variant="contained"
-        className={classes.createButton}
-        color="primary"
-      >
-        Create Gallery
-      </Button>
+        <Button
+          variant="contained"
+          className={classes.createButton}
+          color="primary"
+          type="submit"
+        >
+          Create Gallery
+        </Button>
+      </form>
     </>
   );
 }
