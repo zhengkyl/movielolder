@@ -37,6 +37,7 @@ function SearchResultCard({ galleryId, passkey, movie }) {
     title = "No Title Available",
     summary = "No Summary Available",
     added,
+    year,
   } = movie;
   const [movieAdded, setMovieAdded] = useState(added);
   const classes = useStyles();
@@ -50,11 +51,12 @@ function SearchResultCard({ galleryId, passkey, movie }) {
       title,
       summary,
       added,
+      year,
     });
     if (response.success) {
       setMovieAdded(false)
     }
-  }, [added, galleryId, id, passkey, posterPath, summary, title]);
+  }, [added, galleryId, id, passkey, posterPath, summary, title, year]);
 
   return (
     <Card className={classes.card}>
@@ -72,7 +74,7 @@ function SearchResultCard({ galleryId, passkey, movie }) {
         disabled={movieAdded}
         className={classes.button}
       >
-        {movieAdded ? "Add" : "Added"}
+        {movieAdded ? "Added" : "Add"}
       </Button>
     </Card>
   );

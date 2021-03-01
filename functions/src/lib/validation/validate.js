@@ -59,15 +59,16 @@ exports.isKeyValid = async function (galleryId, key, adminOnly) {
     return data;
   }
 
-
-  const adminHash = snapshot.data()["adminHash"];
+  const metadata = snapshot.data();
+  // console.log(metadata)
+  const adminHash = metadata["adminHash"];
   const matchAdmin = await bcrypt.compare(key, adminHash);
   if (adminOnly || matchAdmin) {
     data.valid = matchAdmin;
     return data;
   }
 
-  const userHash = snapshot.data()["userHash"];
+  const userHash = metadata["userHash"];
   const matchUser = await bcrypt.compare(key, userHash);
 
   data.valid = matchUser;

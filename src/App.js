@@ -36,7 +36,7 @@ function App({ galleryId, passkey }) {
         <CssBaseline />
         <Navigation/>
         <Container maxWidth="md">
-          {galleryId ? <GalleryView/> : <HomeView/>}
+          {galleryId ? <GalleryView galleryId={galleryId} passkey={passkey}/> : <HomeView/>}
         </Container>
       </ThemeProvider>
     </>

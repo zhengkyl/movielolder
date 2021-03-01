@@ -20,17 +20,17 @@ exports.getMovieResults = async function (req, res, next) {
         .doc(galleryId)
         .collection("movies");
       const snapshot = await addedMoviesRef.get();
-      const matchList = snapshot.forEach((doc) => doc.id);
 
+      const matchList = snapshot.empty ? [] : snapshot.forEach((doc) => doc.id);
 
       movieResults = data.results.map((movie) => {
         return {
-          id: movie.id,
+          id: movie.id.toString(),
           posterPath: movie.poster_path,
           summary: movie.overview,
           title: movie.title,
           year: new Date(movie.release_date).getFullYear().toString(),
-          added: matchList.includes(movie.id)
+          added: matchList.includes(movie.id),
         };
       });
     }

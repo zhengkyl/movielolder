@@ -10,10 +10,10 @@ exports.vote = async function () {};
 
 exports.addMovie = async function (req, res, next) {
   const galleryId = req.params.galleryId;
-  const userKey = req.body.key;
-
-  const { valid, message } = isKeyValid(galleryId, userKey);
+  const key = req.body.key;
+  const { valid, message } = await isKeyValid(galleryId, key);
   if (!valid) {
+    // console.log("message is " + message)
     return res.status(400).json({
       success: valid,
       data: message,
@@ -37,11 +37,14 @@ exports.addMovie = async function (req, res, next) {
 
   try {
     await firestore.runTransaction(async (trans) => {
-      const metadata = await trans.get(galleryDoc)
-      const newCount = metadata.count() + 1
-      trans.update(galleryDoc, {count: newCount});
+      const newMovie = await movieDoc.get();
+      if (!newMovie.exists) {
+        const metadata = await trans.get(galleryDoc);
+        const newCount = metadata.count + 1;
+        trans.update(galleryDoc, { count: newCount });
 
-      trans.set(movieDoc, movieData);
+        trans.set(movieDoc, movieData);
+      }
     });
 
     return res.status(200).json({
@@ -49,6 +52,7 @@ exports.addMovie = async function (req, res, next) {
       data: "Movie added successfully",
     });
   } catch (err) {
+    // console.log("next error")
     return next(err);
   }
 };

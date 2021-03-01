@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { TextField, makeStyles, List, ListItem } from "@material-ui/core";
 
-import { getSearchMovieResults, postAddMovie } from "../../privateData";
+import { getSearchMovieResults } from "../../privateData";
 import SearchResultCard from "../../components/SearchResultCard";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,14 +27,15 @@ export default function MovieSearchView({ galleryId, passkey }) {
     //encodeURIComponent()
     async (e) => {
       e.preventDefault(); //stop reload
-      console.log(e);
+      // console.log(e);
       const movieResults = await getSearchMovieResults(
+        galleryId,
         encodeURIComponent(query),
         1
       );
       setMovieList(movieResults.data);
     },
-    [query]
+    [query, galleryId]
   );
 
 

@@ -5,8 +5,6 @@ async function resolveCollectionQuery({collectionRef, limit, page}, res, next) {
     const snapshot = await collectionRef.get();
     const exists = !snapshot.empty;
 
-    const statusCode = exists ? 200 : 404;
-
     // Filter results to requested page
     const data = exists
       ? snapshot.docs
@@ -14,10 +12,10 @@ async function resolveCollectionQuery({collectionRef, limit, page}, res, next) {
             (doc, index) => index >= (page - 1) * limit && index < page * limit
           )
           .map((doc) => doc.data())
-      : "Gallery does not exist.";
+      : ["Collection has no elements"];
 
-    return res.status(statusCode).json({
-      success: exists,
+    return res.status(200).json({
+      success: false,
       data: data,
     });
   } catch (err) {

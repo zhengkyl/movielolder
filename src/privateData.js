@@ -9,8 +9,8 @@ export async function getTopMovies(galleryId, number, page) {
   return movies.ok ? movies.json(): {data:[]};
 }
 
-export async function getSearchMovieResults(queryString, page) {
-  const movies = await fetch(`${API_BASE}/search/movies?query=${queryString}&page=${page}`)
+export async function getSearchMovieResults(galleryId, queryString, page) {
+  const movies = await fetch(`${API_BASE}/search/${galleryId}/movies?query=${queryString}&page=${page}`)
   return movies.ok ? movies.json(): {data:[]};
 }
 
@@ -28,6 +28,7 @@ export async function postCreateGallery(galleryId, userKey, adminKey) {
 }
 // movie is {id, posterPath, summary, title, year}
 export async function postAddMovie(galleryId, key, movie) {
+  console.log(movie)
   const response = await fetch(`${API_BASE}/edit/${galleryId}/addMovie`,{
     method:'POST',
     headers:{
@@ -36,8 +37,10 @@ export async function postAddMovie(galleryId, key, movie) {
     body:JSON.stringify({galleryId, key, movie})
   })
 
-  // console.log(response)
-  return response.json();
+  console.log(response)
+  const t = await response.json();
+  console.log(t)
+  return t;
 }
 
 // // EVERYTHING BELOW MUST BE REDONE
