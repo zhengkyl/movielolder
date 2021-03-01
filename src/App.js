@@ -40,8 +40,8 @@ function App({ galleryId, passkey }) {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Navigation/>
         <Container maxWidth="md">
-          <Navigation/>
           {galleryId ? <GalleryView/> : <HomeView/>}
         </Container>
       </ThemeProvider>
