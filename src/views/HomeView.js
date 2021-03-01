@@ -1,21 +1,19 @@
 import React, { useCallback, useState } from "react";
 import {
   Typography,
-  TextField,
-  makeStyles,
+  // makeStyles,
   Button,
-  Paper,
 } from "@material-ui/core";
 
 import CreateGalleryView from "./home/CreateGalleryView";
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   backdrop: {
+//     zIndex: theme.zIndex.drawer + 1,
+//   },
+// }));
 
 export default function HomeView() {
-  const classes = useStyles()
+  // const classes = useStyles()
   const [createOpen, setCreateOpen] = useState(false);
 
   const handleCreateClose = useCallback(() => {

@@ -1,5 +1,5 @@
 const router = require("express").Router();
 const controller = require("./controller");
-router.get("/movies", controller.getMovieResults);
+router.get("/:galleryId/movies", controller.getMovieResults);
 
 module.exports = router

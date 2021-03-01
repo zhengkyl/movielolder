@@ -6,7 +6,6 @@ import GallerySettingsView from "./gallery/GallerySettingsView";
 import LeaderboardView from "./gallery/LeaderboardView";
 import MovieSearchView from "./gallery/MovieSearchView";
 import {
-  makeStyles,
   Tabs,
   Tab,
 } from "@material-ui/core";
@@ -63,10 +62,10 @@ function GalleryView({ galleryId, passkey }) {
         <CreateGalleryView />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <MovieSearchView galleryId={galleryId} />
+        <MovieSearchView galleryId={galleryId} passkey={passkey}/>
       </TabPanel>
       <TabPanel value={tab} index={2}>
-        <LeaderboardView metaData={{ moviesCount: 67, galleryId: "kgg" }} />
+        <LeaderboardView metaData={{ moviesCount: 67, galleryId: galleryId }} />
       </TabPanel>
 
       <TabPanel value={tab} index={3}>

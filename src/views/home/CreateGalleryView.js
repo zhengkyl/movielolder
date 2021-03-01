@@ -9,7 +9,6 @@ import {
   TextField,
   makeStyles,
   Button,
-  Paper,
   IconButton,
   DialogContent,
   DialogActions,

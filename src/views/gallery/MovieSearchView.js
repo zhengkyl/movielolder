@@ -1,28 +1,20 @@
 import React, { useState, useCallback } from "react";
-import {
-  Typography,
-  TextField,
-  makeStyles,
-  Button,
-  Paper,
-  List,
-  ListItem,
-} from "@material-ui/core";
+import { TextField, makeStyles, List, ListItem } from "@material-ui/core";
 
-import { getSearchMovieResults } from "../../privateData";
+import { getSearchMovieResults, postAddMovie } from "../../privateData";
 import SearchResultCard from "../../components/SearchResultCard";
 
 const useStyles = makeStyles((theme) => ({
-  searchBox:{
-    width:"100%",
+  searchBox: {
+    width: "100%",
   },
-  form:{
-    padding:theme.spacing(2)
-  }
+  form: {
+    padding: theme.spacing(2),
+  },
 }));
 
-export default function MovieSearchView({ galleryId }) {
-  const classes = useStyles()
+export default function MovieSearchView({ galleryId, passkey }) {
+  const classes = useStyles();
 
   const [movieList, setMovieList] = useState([]);
   const [query, setQuery] = useState("");
@@ -35,7 +27,7 @@ export default function MovieSearchView({ galleryId }) {
     //encodeURIComponent()
     async (e) => {
       e.preventDefault(); //stop reload
-      console.log(e)
+      console.log(e);
       const movieResults = await getSearchMovieResults(
         encodeURIComponent(query),
         1
@@ -44,6 +36,7 @@ export default function MovieSearchView({ galleryId }) {
     },
     [query]
   );
+
 
   return (
     <>
@@ -59,13 +52,11 @@ export default function MovieSearchView({ galleryId }) {
       <List>
         {movieList.map((movie) => (
           <ListItem key={movie.id}>
-            <SearchResultCard galleryId={galleryId}
-              id={movie.id}
-              posterPath={movie.posterPath}
-              summary={movie.summary}
-              title={movie.title}
-              // added={movie.}
-              />
+            <SearchResultCard
+              galleryId={galleryId}
+              passkey={passkey}
+              movie={movie}
+            />
           </ListItem>
         ))}
       </List>

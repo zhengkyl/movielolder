@@ -3,7 +3,7 @@ const controller = require("./controller");
 
 //Movie Stuff -> USER LEVEL
 // router.post("/:galleryId/vote", controller.vote);
-// router.post("/:galleryId/addMovie", controller.addMovie);
+router.post("/:galleryId/addMovie", controller.addMovie);
 // router.post("/:galleryId/removeMovie", controller.removeMovie);
 
 //Gallery Stuff -> ADMIN LEVEL

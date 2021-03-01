@@ -12,5 +12,3 @@ export function getGalleryIdandKey() {
   //   ["encrypt", "decrypt"]
   // );
 }
-
-

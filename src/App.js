@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import "./App.css";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -17,24 +17,18 @@ import HomeView from "./views/HomeView"
 import {
   CssBaseline,
   Container,
-  makeStyles,
+  // makeStyles,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
-const useStyles = makeStyles((theme) => ({
-  app: {
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column-reverse",
-    height: `100vh`,
-    maxWidth: 1000,
-    margin: "0 auto",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   app: {
+//   },
+// }));
 
 // const test = 2;
 function App({ galleryId, passkey }) {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <>

@@ -26,6 +26,19 @@ export async function postCreateGallery(galleryId, userKey, adminKey) {
   // console.log(response)
   return response.json();
 }
+// movie is {id, posterPath, summary, title, year}
+export async function postAddMovie(galleryId, key, movie) {
+  const response = await fetch(`${API_BASE}/edit/${galleryId}/addMovie`,{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({galleryId, key, movie})
+  })
+
+  // console.log(response)
+  return response.json();
+}
 
 // // EVERYTHING BELOW MUST BE REDONE
 // export const getMovieSearchResults = firebase.functions().httpsCallable("getMovieSearchResults")
