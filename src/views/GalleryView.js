@@ -59,17 +59,13 @@ function GalleryView({ galleryId, passkey }) {
         <Tab label="Gallery" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={tab} index={0}>
-        <CreateGalleryView />
+        <GallerySettingsView />
       </TabPanel>
       <TabPanel value={tab} index={1}>
         <MovieSearchView galleryId={galleryId} passkey={passkey}/>
       </TabPanel>
       <TabPanel value={tab} index={2}>
         <LeaderboardView metaData={{ moviesCount: 67, galleryId: galleryId }} />
-      </TabPanel>
-
-      <TabPanel value={tab} index={3}>
-        <GallerySettingsView />
       </TabPanel>
     </>
   );

@@ -54,7 +54,7 @@ function SearchResultCard({ galleryId, passkey, movie }) {
       year,
     });
     if (response.success) {
-      setMovieAdded(false)
+      setMovieAdded(true)
     }
   }, [added, galleryId, id, passkey, posterPath, summary, title, year]);
 

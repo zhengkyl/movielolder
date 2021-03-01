@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   form: {
-    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -52,7 +53,7 @@ export default function MovieSearchView({ galleryId, passkey }) {
       </form>
       <List>
         {movieList.map((movie) => (
-          <ListItem key={movie.id}>
+          <ListItem key={movie.id} disableGutters>
             <SearchResultCard
               galleryId={galleryId}
               passkey={passkey}
