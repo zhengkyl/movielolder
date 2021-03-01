@@ -40,7 +40,7 @@ exports.addMovie = async function (req, res, next) {
       const newMovie = await movieDoc.get();
       if (!newMovie.exists) {
         const metadata = await trans.get(galleryDoc);
-        const newCount = metadata.count + 1;
+        const newCount = metadata.data().count + 1;
         trans.update(galleryDoc, { count: newCount });
 
         trans.set(movieDoc, movieData);

@@ -37,10 +37,10 @@ export async function postAddMovie(galleryId, key, movie) {
     body:JSON.stringify({galleryId, key, movie})
   })
 
-  console.log(response)
-  const t = await response.json();
-  console.log(t)
-  return t;
+  // console.log(response)
+  // const t = await response.json();
+  // console.log(t)
+  return response.json();
 }
 
 // // EVERYTHING BELOW MUST BE REDONE
