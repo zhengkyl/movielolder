@@ -4,7 +4,7 @@ import {
   makeStyles,
   Paper,
 } from "@material-ui/core";
-import GalleryLinksTable from "../components/GalleryLinksTable";
+import GalleryLinksTable from "../../components/GalleryLinksTable";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
-export default function NewGalleryView({ galleryId, userKey, adminKey }) {
+export default function GallerySettingsView({ galleryId, userKey, adminKey }) {
   const classes = useStyles()
   return (
     <>

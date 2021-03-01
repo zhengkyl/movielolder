@@ -14,8 +14,3 @@ export function getGalleryIdandKey() {
 }
 
 
-// should search be done by client????
-export async function getMovieSearchResults() {
-
-}
-

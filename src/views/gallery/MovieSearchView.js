@@ -9,8 +9,8 @@ import {
   ListItem,
 } from "@material-ui/core";
 
-import { getSearchMovieResults } from "../privateData";
-import SearchResultCard from "../components/SearchResultCard";
+import { getSearchMovieResults } from "../../privateData";
+import SearchResultCard from "../../components/SearchResultCard";
 
 const useStyles = makeStyles((theme) => ({
   searchBox:{

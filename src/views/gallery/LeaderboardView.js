@@ -10,7 +10,7 @@ import {
   TablePagination,
   Typography,
 } from "@material-ui/core";
-import { getTopMovies } from "../privateData";
+import { getTopMovies } from "../../privateData";
 
 function LeaderboardHeader({ headers }) {
   return (
