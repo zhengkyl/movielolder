@@ -17,25 +17,26 @@ import HomeView from "./views/HomeView"
 import {
   CssBaseline,
   Container,
-  // makeStyles,
+  makeStyles,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
-// const useStyles = makeStyles((theme) => ({
-//   app: {
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+  app: {
+    overflow:"hidden"
+  },
+}));
 
 // const test = 2;
 function App({ galleryId, passkey }) {
-  // const classes = useStyles();
+  const classes = useStyles();
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Navigation/>
-        <Container maxWidth="md">
+        <Container maxWidth="md" className={classes.app}>
           {galleryId ? <GalleryView galleryId={galleryId} passkey={passkey}/> : <HomeView/>}
         </Container>
       </ThemeProvider>
