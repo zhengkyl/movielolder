@@ -2,6 +2,9 @@ import React, { useCallback, useState } from "react";
 import { Typography, makeStyles, Button } from "@material-ui/core";
 
 import background from "../images/movielo_red.jpg";
+import howAdd from "../images/how_add.png";
+import howVote from "../images/how_vote.png";
+import howRank from "../images/how_rank.png";
 
 import CreateGalleryView from "./home/CreateGalleryView";
 // import classes from "*.module.css";
@@ -57,6 +60,9 @@ export default function HomeView() {
       <Typography paragraph>
         Choose your own movies and see how they fall in place.
       </Typography>
+      <img src={howAdd} alt="Adding movies"/>
+      <img src={howVote} alt="Voting on movies"/>
+      <img src={howRank} alt="Ranking movies"/>
       <Button onClick={handleCreateOpen}>Get started</Button>
       <Typography variant="h3">Browse Galleries</Typography>
 
