@@ -62,6 +62,23 @@ exports.getGalleries = async function (req, res, next) {
 
 exports.getMetadata = async function (req, res, next) {
   const galleryId = req.params.galleryId;
-  const key = req.body.key;
-  const { valid, message, admin } = await isKeyValid(galleryId, key);
+  const galleryRef = firestore.doc(`galleries/${galleryId}`)
+
+  try{
+    const snapshot = await galleryRef.get();
+
+    const metadata = {}
+    if (snapshot.exists) {
+      const alldata = snapshot.data
+      metadata.moviesCount = alldata.moviesCount
+    }
+
+    return res.status(200).json({
+      success: snapshot.exists,
+      data: metadata
+    })
+  }
+  catch(err){
+    return next(err);
+  }
 }
