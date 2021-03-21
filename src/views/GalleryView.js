@@ -5,10 +5,7 @@ import CreateGalleryView from "./home/CreateGalleryView";
 import GallerySettingsView from "./gallery/GallerySettingsView";
 import LeaderboardView from "./gallery/LeaderboardView";
 import MovieSearchView from "./gallery/MovieSearchView";
-import {
-  Tabs,
-  Tab,
-} from "@material-ui/core";
+import { Tabs, Tab } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
 //   app: {
@@ -37,7 +34,7 @@ function a11yProps(index) {
 }
 
 // const test = 2;
-function GalleryView({ galleryId, passkey }) {
+function GalleryView({ galleryId, userKey, adminKey }) {
   // const classes = useStyles();
   const [tab, setTab] = useState(0);
 
@@ -59,10 +56,14 @@ function GalleryView({ galleryId, passkey }) {
         <Tab label="Gallery" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={tab} index={0}>
-        <GallerySettingsView />
+        <GallerySettingsView
+          galleryId={galleryId}
+          userKey={userKey}
+          adminKey={adminKey}
+        />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <MovieSearchView galleryId={galleryId} passkey={passkey}/>
+        <MovieSearchView galleryId={galleryId} userKey={userKey} adminKey={adminKey} />
       </TabPanel>
       <TabPanel value={tab} index={2}>
         <LeaderboardView metaData={{ moviesCount: 67, galleryId: galleryId }} />

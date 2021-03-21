@@ -47,7 +47,7 @@ exports.isGalleryInfoValid = async function (
 };
 
 exports.isKeyValid = async function (galleryId, key, adminOnly) {
-  const data = { valid: false, message: "Permission Denied" };
+  const data = { valid: false, message: "Permission Denied", admin:false };
   if (!isStringValid(key)) {
     data.message = "Key does not fit format";
     return data;
@@ -65,6 +65,7 @@ exports.isKeyValid = async function (galleryId, key, adminOnly) {
   const matchAdmin = await bcrypt.compare(key, adminHash);
   if (adminOnly || matchAdmin) {
     data.valid = matchAdmin;
+    data.admin = true;
     return data;
   }
 

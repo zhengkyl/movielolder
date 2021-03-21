@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MovieSearchView({ galleryId, passkey }) {
+export default function MovieSearchView({ galleryId, userKey, adminKey }) {
   const classes = useStyles();
 
   const [movieList, setMovieList] = useState([]);
@@ -56,7 +56,8 @@ export default function MovieSearchView({ galleryId, passkey }) {
           <ListItem key={movie.id} disableGutters>
             <SearchResultCard
               galleryId={galleryId}
-              passkey={passkey}
+              userKey={userKey}
+              adminKey={adminKey}
               movie={movie}
             />
           </ListItem>

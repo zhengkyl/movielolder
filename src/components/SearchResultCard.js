@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchResultCard({ galleryId, passkey, movie }) {
+function SearchResultCard({ galleryId, userKey, adminKey, movie }) {
   let {
     id,
     posterPath,
@@ -45,7 +45,7 @@ function SearchResultCard({ galleryId, passkey, movie }) {
   // summary = summary ? summary : "No Summary Available";
 
   const handleAdd = useCallback(async () => {
-    const response = await postAddMovie(galleryId, passkey, {
+    const response = await postAddMovie(galleryId, userKey, {
       id,
       posterPath,
       title,
@@ -56,7 +56,7 @@ function SearchResultCard({ galleryId, passkey, movie }) {
     if (response.success) {
       setMovieAdded(true)
     }
-  }, [added, galleryId, id, passkey, posterPath, summary, title, year]);
+  }, [added, galleryId, id, userKey, posterPath, summary, title, year]);
 
   return (
     <Card className={classes.card}>

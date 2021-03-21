@@ -3,8 +3,8 @@ export function getGalleryIdandKey() {
   const urlParams = new URLSearchParams(searchString);
   
   const galleryId = urlParams.get("gallery");
-  const key = urlParams.get("key");
-  return {galleryId, key}
+  const keys = urlParams.get("key").split(',');
+  return {galleryId, userKey:keys[0], adminKey:keys[1]}
   //https://blog.excalidraw.com/end-to-end-encryption/
   // const key = await window.crypto.subtle.generateKey(
     //   { name: "AES-GCM", length: 128 },

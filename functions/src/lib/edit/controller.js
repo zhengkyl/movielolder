@@ -11,7 +11,7 @@ exports.vote = async function () {};
 exports.addMovie = async function (req, res, next) {
   const galleryId = req.params.galleryId;
   const key = req.body.key;
-  const { valid, message } = await isKeyValid(galleryId, key);
+  const { valid, message, admin } = await isKeyValid(galleryId, key);
   if (!valid) {
     // console.log("message is " + message)
     return res.status(400).json({

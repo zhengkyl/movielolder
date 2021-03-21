@@ -52,16 +52,16 @@ export default function GalleryLinksTable({
             link={`https://movielo.web.app/?gallery=${galleryId}`}
             desc="Viewers can only VIEW galleries."
           />
-          <LinkTableRow
+          {userKey && <LinkTableRow
             title="User"
             link={`https://movielo.web.app/?gallery=${galleryId}&key=${userKey}`}
             desc="Users can ADD, REMOVE, and VOTE on movies."
-          />
-          <LinkTableRow
+          />}
+          {adminKey && <LinkTableRow
             title="Admin"
-            link={`https://movielo.web.app/?gallery=${galleryId}&key=${adminKey}`}
+            link={`https://movielo.web.app/?gallery=${galleryId}&key=${userKey},${adminKey}`}
             desc="Admins can CHANGE PASSKEYS, and DELETE galleries."
-          />
+          />}
         </TableBody>
       </Table>
     </TableContainer>

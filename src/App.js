@@ -11,33 +11,37 @@ import React from "react";
 // import { useSpring, animated, interpolate } from "react-spring"
 // import { useHover, useDrag } from "react-use-gesture"
 // // import movie from "../images/movie.jpg"
-import Navigation from "./components/Navigation"
-import GalleryView from "./views/GalleryView"
-import HomeView from "./views/HomeView"
-import {
-  CssBaseline,
-  Container,
-  makeStyles,
-} from "@material-ui/core";
+import Navigation from "./components/Navigation";
+import GalleryView from "./views/GalleryView";
+import HomeView from "./views/HomeView";
+import { CssBaseline, Container, makeStyles } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 const useStyles = makeStyles((theme) => ({
   app: {
-    overflow:"hidden"
+    overflow: "hidden",
   },
 }));
 
 // const test = 2;
-function App({ galleryId, passkey }) {
+function App({ galleryId, userKey, adminKey }) {
   const classes = useStyles();
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navigation/>
+        <Navigation />
         <Container maxWidth="md" className={classes.app}>
-          {galleryId ? <GalleryView galleryId={galleryId} passkey={passkey}/> : <HomeView/>}
+          {galleryId ? (
+            <GalleryView
+              galleryId={galleryId}
+              userKey={userKey}
+              adminKey={adminKey}
+            />
+          ) : (
+            <HomeView />
+          )}
         </Container>
       </ThemeProvider>
     </>

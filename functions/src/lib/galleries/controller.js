@@ -59,3 +59,9 @@ exports.getGalleries = async function (req, res, next) {
 
   return resolveCollectionQuery({collectionRef:galleriesRef, limit, page}, res, next);
 };
+
+exports.getMetadata = async function (req, res, next) {
+  const galleryId = req.params.galleryId;
+  const key = req.body.key;
+  const { valid, message, admin } = await isKeyValid(galleryId, key);
+}
