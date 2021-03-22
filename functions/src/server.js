@@ -10,9 +10,15 @@ app
   .use("/galleries", require("./lib/galleries/route"))
   .use("/search", require("./lib/search/route"))
   .use("/edit", require("./lib/edit/route"))
+  .use((err, req, res, next) => {
+    return res.status(500).json({
+      success:false,
+      data:err.toString()
+    })
+  })
   .get("*", (_, res) =>
     res.status(404).json({ success: false, data: "Endpoint does not exist" })
-  );
+  )
 
 module.exports = app;
 

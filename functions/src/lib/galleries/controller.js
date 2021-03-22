@@ -13,10 +13,15 @@ async function resolveCollectionQuery({collectionRef, limit, page}, res, next) {
           )
           .map((doc) => doc.data())
       : ["Collection has no elements"];
-
+    
+    const metadata = {
+      totalCount: exists ? snapshot.docs.length : 0,
+      requestCount:data.length
+    }
     return res.status(200).json({
       success: false,
       data: data,
+      metadata: metadata
     });
   } catch (err) {
     return next(err);
@@ -59,6 +64,7 @@ exports.getGalleries = async function (req, res, next) {
 
   return resolveCollectionQuery({collectionRef:galleriesRef, limit, page}, res, next);
 };
+
 
 exports.getMetadata = async function (req, res, next) {
   const galleryId = req.params.galleryId;

@@ -26,17 +26,18 @@ function LeaderboardHeader({ headers }) {
   );
 }
 
-export default function LeaderboardView({ metaData, ...other }) {
-  const { moviesCount, galleryId } = metaData;
+export default function LeaderboardView({ galleryId, ...other }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [movieDocList, setMovieDocList] = useState([]);
+  const [totalCount, setTotalCount] = useState(0)
 
   const updateMovieList = useCallback(async (reqPage) => {
     // change page from 0 to 1 based
     const newList = await getTopMovies(galleryId, rowsPerPage, reqPage + 1);
     setMovieDocList(newList.data);
-  }, [galleryId, rowsPerPage]);
+    setTotalCount(newList.metadata.totalCount)
+  }, [galleryId, rowsPerPage, setTotalCount]);
 
   const handleChangePage = useCallback(
     (e, newPage) => {
@@ -88,7 +89,7 @@ export default function LeaderboardView({ metaData, ...other }) {
           rowsPerPageOptions={[10, 25, 50]}
           rowsPerPage={rowsPerPage}
           page={page}
-          count={moviesCount}
+          count={totalCount}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />

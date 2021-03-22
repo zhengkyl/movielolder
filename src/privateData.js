@@ -6,7 +6,7 @@ const API_BASE = "https://us-central1-movielo.cloudfunctions.net/api"
 
 export async function getTopMovies(galleryId, number, page) {
   const movies = await fetch(`${API_BASE}/galleries/${galleryId}/movies?limit=${number}&page=${page}&sortBy=rating&order=desc`)
-  return movies.ok ? movies.json(): {data:[]};
+  return movies.ok ? movies.json(): {data:[], metadata:{totalCount:0}};
 }
 
 export async function getSearchMovieResults(galleryId, queryString, page) {
