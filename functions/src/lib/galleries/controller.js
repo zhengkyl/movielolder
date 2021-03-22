@@ -19,7 +19,7 @@ async function resolveCollectionQuery({collectionRef, limit, page}, res, next) {
       requestCount:data.length
     }
     return res.status(200).json({
-      success: false,
+      success: true,
       data: data,
       metadata: metadata
     });

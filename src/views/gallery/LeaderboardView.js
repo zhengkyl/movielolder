@@ -9,6 +9,7 @@ import {
   TableCell,
   TablePagination,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import { getTopMovies } from "../../privateData";
 
@@ -30,19 +31,26 @@ export default function LeaderboardView({ galleryId, ...other }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [movieDocList, setMovieDocList] = useState([]);
-  const [totalCount, setTotalCount] = useState(0)
+  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const updateMovieList = useCallback(async (reqPage) => {
-    // change page from 0 to 1 based
-    const newList = await getTopMovies(galleryId, rowsPerPage, reqPage + 1);
-    setMovieDocList(newList.data);
-    setTotalCount(newList.metadata.totalCount)
-  }, [galleryId, rowsPerPage, setTotalCount]);
+  const updateMovieList = useCallback(
+    async (reqPage) => {
+      // change page from 0 to 1 based
+      setLoading(true)
+      const newList = await getTopMovies(galleryId, rowsPerPage, reqPage + 1);
+      console.log(newList);
+      setLoading(false)
+      setMovieDocList(newList.data);
+      setTotalCount(newList.metadata.totalCount);
+    },
+    [galleryId, rowsPerPage, setTotalCount]
+  );
 
   const handleChangePage = useCallback(
     (e, newPage) => {
       setPage(newPage);
-      updateMovieList(newPage)
+      updateMovieList(newPage);
     },
     [setPage, updateMovieList]
   );
@@ -67,6 +75,15 @@ export default function LeaderboardView({ galleryId, ...other }) {
               headers={["Rank", "Movie", "Rating", "Wins", "Losses"]}
             />
             <TableBody>
+              {loading && (
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <CircularProgress
+                      style={{ margin: "auto", display: "flex" }}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
               {console.log("renders twice on page update")}
               {movieDocList.map((movieDoc, movieIndex) => {
                 const movie = movieDoc;

@@ -66,7 +66,7 @@ function GalleryView({ galleryId, userKey, adminKey }) {
         <MovieSearchView galleryId={galleryId} userKey={userKey} adminKey={adminKey} />
       </TabPanel>
       <TabPanel value={tab} index={2}>
-        <LeaderboardView metaData={{ moviesCount: 67, galleryId: galleryId }} />
+        <LeaderboardView galleryId={galleryId} />
       </TabPanel>
     </>
   );
