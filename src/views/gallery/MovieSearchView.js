@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { TextField, makeStyles, List, ListItem } from "@material-ui/core";
+import { CircularProgress, TextField, makeStyles, List, ListItem } from "@material-ui/core";
 
 import { getSearchMovieResults } from "../../privateData";
 import SearchResultCard from "../../components/SearchResultCard";
@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  loading:{
+    margin:"auto",
+    display:"flex"
+  }
 }));
 
 export default function MovieSearchView({ galleryId, userKey, adminKey }) {
@@ -19,6 +23,7 @@ export default function MovieSearchView({ galleryId, userKey, adminKey }) {
 
   const [movieList, setMovieList] = useState([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false)
   const handleChangeQuery = useCallback(
     (e) => setQuery(encodeURIComponent(e.target.value)),
     [setQuery]
@@ -29,11 +34,13 @@ export default function MovieSearchView({ galleryId, userKey, adminKey }) {
     async (e) => {
       e.preventDefault(); //stop reload
       // console.log(e);
+      setLoading(true)
       const movieResults = await getSearchMovieResults(
         galleryId,
         encodeURIComponent(query),
         1
       );
+      setLoading(false)
       setMovieList(movieResults.data);
     },
     [query, galleryId]
@@ -51,6 +58,8 @@ export default function MovieSearchView({ galleryId, userKey, adminKey }) {
           className={classes.searchBox}
         />
       </form>
+      {/* <CircularProgress className={classes.loading}/> */}
+      {loading && <CircularProgress className={classes.loading}/>}
       <List>
         {movieList.map((movie) => (
           <ListItem key={movie.id} disableGutters>
